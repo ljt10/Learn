@@ -1,0 +1,3638 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>js每天的总结和js技巧总结</title>
+    <style>
+        body{
+
+        }
+    </style>
+    <script src="课件/2017-11-22/2018-2-7/my-app/src/todolist/component/list.js"></script>
+    <script src="整站需要的文件/js/淘宝flexible.js"></script>
+</head>
+<body>
+命名推荐用小驼峰。
+
+对象的“变量属性”。
+    “对象.变量”不能访问变量，“对象.变量”是直接：读取对象下面的属性。
+    对象的属性要变成“变量”的时候要把“.”换成“[]”，把“变量属性”放到“[]”里。
+    如：
+        let = width/height;
+        box.style[val] 等同 box.style.width/height。
+        box.style.val  是直接读取style.val 会报错
+
+获取一个元素的时候后面要加[0]。
+
+有时候每次点击触发运行前要初始化。
+
+this
+    有未知的意思。就是触发的元素。
+    只要操作一个东西，要对应控制另一个东西，立马想到索引。索引绑定
+    “当前本身的...”。btnS1[i].num = i; 循环把每个i的数值存在对应的btnS1[i]的unm属性里。下面要用到的话直接   写btnS1[i].unm，会报错。要写this[i] 。this等同于btnS1[i]。
+    把值存在每个的unm的属性里，下面用this.unm访问unm属性。
+    lis[i].num = i;
+    方法：前面有主，主是谁，this就是谁
+    函数：this默认为window
+    当某个事件触发的时候，被触发的这个元素就是this
+
+% 取余。
+    console.log(2%5); //2
+    5 / 2  1 就是它的余数
+    num %= 。循环
+
+if
+    可以用来做判断。什么条件执行，什么条件停止，符合什么条件进入(单个匹配)。
+
+for
+    条件为true时自动复制相同的代码，只有初始化"i" ++/-- 在变动。i 增加/减少 到某个值时，条件变false停    止复制。
+    for(;条件;){}。循环
+        1.初始化变量（在整个循环中只会走一次）
+        2.判断(只要判断条件成立，就会循环,不成立就不循环)
+        3.执行代码
+        4.自增或者自减（最后一步）
+    性能优化。因为判断条件每次循环都会进入计算，那么会导致一些不必要的开销
+    所以提前把lis.length给计算出来，能够优化性能。
+        for(var i = 0,len = lis.length;i<len;i++)
+
+数据类型转换。
+    Number()。
+        不可以转'20px'
+        Number('') ->0
+        需大写。number转空字符串为0
+        如果Number转不出来，比如：'20px'；那么同样会给个结果NaN
+    parseInt
+        可以转'20px'
+        parseInt('') ->NaN
+        内容不能为空格和空，结果是NaN
+        比number多了一个取整功能
+        开头必须为数字，不然转NaN
+        如果开头为0或空格，那么会舍弃0或空格
+        如果开头为数字中间不为数字了，那么就会把开头的数字转成数字返回。
+        如果添加第二个参数：
+        将第一个参数转成十进制
+    parseFloat(字符串)
+        可以转'20px'
+        parseFloat('') ->NaN
+        内容不能为空格和空，结果是NaN
+        相比parseInt可以转小数，不过没有第二个参数
+    if(parseFloat(qqValue) != parseInt(qqValue)){   //判断是否为整数
+
+isNaN()
+    判断是否NaN。(非法的数学运算)
+
+function
+    函数声明。
+        1、function fn(){}
+        2、var fn = function(){}
+    函数名+()，不但会调用函数本身，还会有返回值。没有设置return，就返回undefined未定义。
+    遇到'函数名+()'不论什么情况都执行函数。遇到'函数名+()'就等于返回值，并且执行一次函数体里的代码。
+    整个函数名||方法名 + 括号就是返回值并且还会把函数体内的代码执行一遍
+    fn()函数前面没主，this指向就是window
+
+    单独域 a 在外面拿不到。b在外面能拿得到。b等同于在window上挂了一个b = 10; window.b
+        (function(){
+            var a = 5;
+            b = 10;    //window.b
+        })();
+
+预解析。
+    遇到var解析var=undefined。遇到function，解析代码块，以后面的代码块为准。每个预解析只会留一个。
+
+onOff
+    设置一个变量，进行标记。(开关)
+
+{}、[]、function。可以加属性，如：fn.num。
+
+[]数组。
+    数组方法：
+        push() 方法可向数组的末尾添加一个或多个元素，并返回新的长度。
+
+以后写a标签的时候href中如果没有地址，那么写成 href="javascript:;"
+
+获取元素后要加下标[]。
+    ClassName()和querySelectorAll('.tip')[0];
+
+return。
+    1、函数名+括号：fn1()==> return后面的值
+    2、所有函数默认返回值：未定义。
+    3、return后下面的任何代码都不执行了。
+    4、return只能在函数里用，其他地方用会报错。
+
+break:
+    终止for循环的
+
+在let声明的时候，一定不要和形参的名字重复。
+
+在一个域下 var 有预解析，let是没有的（有暂存死区）
+
+a=1。这句话是不会报错的。alert(a)，但是没有a是会报错的。
+
+可以利用全局变量获取函数内的内容。(需要调用一次函数)。
+可以利用函数局部调用把函数里的东西获取到。
+
+ID.style.width +　ID.style.height 是不会覆盖行间样式的。
+cssText：批量设置行间样式。会覆盖
+    注意：如果在行间已经有了样式，那么会覆盖。
+
+getComputedStyle(obj).样式 : 获取计算后的样式。
+currentStyle获取计算后的样式。  兼容IE，不兼容标准浏览器
+//兼容IE。获取计算后的样式。用法：getStyle(元素,'height')
+    function getStyle(obj,attr) {
+        return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj)[attr];
+    }
+
+数学方法
+    toFixed(2)，取小数toFixed(3.1415)=> 3.14。返回值是字符串。
+
+call跟apply，bind的区别
+    改变this指向,都函数自身的方法。
+
+call
+    有多个参数，从第二个起为实参。
+    fn.call(document,1,2);
+
+apply
+    就2个参数，第二个参数是数组，数组中放的是实参
+    fn.apply(document,[1,2]);
+
+bind(this)
+    this绑定之后是不调用的,也可以有多个参数,
+    从第二个参数起，就是实参的各式个数,
+    它的返回值是一个改变this的函数
+    let f = fn.bind(document,1,2);
+    f();
+    返回值也可以传实参。
+
+    let f = fn.bind(document);
+    f(1,2);
+
+pop()没参数,里面放1000也是删除一个。
+
+***forEach里for循环var时不要用'i'！
+
+测试题
+    for(;条件1，条件2，...;){}，不论条件有多少个都是走最后一个。
+
+    函数的默认返回值是undefined
+
+    遇到 var newFn = fn1(); 不论函数体里的是什么直接看函数return 后面的东西，如果return结果经过计算，再回头看函数体
+    当然，var newFn = fn1();也会执行一次fn1()。
+
+    arr.splice(1,0)。不删除就返回[]
+
+    fn()函数前面没主，this指向就是window
+
+    单独域 a 在外面拿不到。b在外面能拿得到。b等同于在window上挂了一个b = 10; window.b
+        (function(){
+            var a = 5;
+            b = 10;    //window.b
+        })();
+
+检测数字
+    利用编码来判断数字。48~57
+    http://2017.miaov.com/v_show/1002
+
+|| 和 &&
+    &&
+        如果第一个条件为真，直接走第二个(可以放代码、函数)。如果不为真，不走第二个，并返回第一个的内容。
+        可以作为回调函数的判断
+
+    ||
+        A || B。
+            A为真，不走B，直接返回A。
+            A为假，直接返回B。
+
+布局转换
+    用for批量定位的时候，首先样式表不能先加绝对定位，因为要先获取offsetTop(距离定位父级的top)
+    1、先把每一个li原来距离定位父级的top，并把数值存进数组里待用。 arr.push(aLi[i].offsetTop);
+    2、把定位数值先循环进每一个元素的行间样式里                   aLi[i].style.top = aLi[i].offsetTop + 'px';
+    3、再用for把li设置成绝对定位元素(把绝对定位写进行间)。        aLi[i].style.position = 'absolute';
+
+详细开关要和内容分开，不要把 详细 包在里面
+
+动态方法获取的数组在删除的时候要i--。
+
+querySelectorAll
+    可以选中某些特定属性的元素。如：querySelectorAll('input[value="下移"]')
+
+上移下移可以用一个变量存一下，直接换。
+
+map()可以用来大清洗。但大清洗性能不佳
+
+同一个域下相同元素、数组不要绑同样的事件或绑同样的函数，因为后者会覆盖前者。
+
+for循环很快，有时候开关要放在事件的里面。
+
+如果num++,--要用同一个数字变量的时候num要设置成-1，并且要先执行num++和num--
+
+onmousedown
+    鼠标事件
+        ev.button == 0 左键
+        ev.button == 0 中键
+        ev.button == 0 右键
+
+classList.contains
+    查看有没有这个class，有返回真，没有返回假。
+
+用js让过渡关闭要写成 obj.style.transition = 'none';
+
+判断小数、整数
+    利用取整。整数取整全等于自己，否则是小数
+    function isFloat(obj){return Math.floor(obj)!==obj}
+
+要渲染4*4的格子的话，有一个数值要取余 i%
+
+包不包含某个class名
+    el.classList.contains(class)
+        返回布尔值，判断指定的类名是否存在。
+        true - 元素包已经包含了该类名
+        false - 元素中不存在该类名
+
+失焦失效
+    $('.title a')[0].style.outline = 'none'; //关闭聚焦样式
+    $('.title a')[0].focus();   //在冲突的地方另其他的地方聚焦，那么这个元素就会失焦。聚焦只能有一个
+
+window.a = 10; 可以delete this.a 。
+不是属性 var a=10;      delete this.a。删不掉。var a =10;不是属性
+
+箭头函数的tish找的是老爹。没函数包着tish是一层一层往上找，
+
+利用toString做类型的判断
+    var arr = [];
+    alert( Object.prototype.toString.call(arr) == '[object Array]' )
+
+定时器的this是window
+
+有变量的时候把.变成[]
+
+input元素的两个属性。(光标)
+    selectionStart、selectionEnd
+    选区开始位置，   选区结束位置。
+        两个值默认都是0，所以当我们使用input.focus()方法时，默认光标在文本的开头。(注意这里并不是说每次focus调用光标都出现在开头。是因为selectionStart的和selectionEnd的值随着文本输入而改变，因而光标的位置随之改变。)
+
+手机端点击事件要用 onTouchStart 
+点击穿透问题。当有一个绝对定位或固定定位元素绑定了touch事件，那么覆盖在他之下的具有点击特性的元素也会被触发。
+解决方法
+	下层元素不使用点击特性的元素
+	或用ev.preventDefault()阻止所有事件，再根据实际	需要重	新开启交互行为。
+    使用onClick
+
+ref在某些生命周期是获取不到的
+父级改变数据，自己跟着改变数据，setState不能写在render里
+
+react生命周期
+组件在初始化时会触发5个钩子函数：
+
+1、getDefaultProps()
+    设置默认的props，也可以用dufaultProps设置组件的默认属性。
+
+2、getInitialState()
+    在使用es6的class语法时是没有这个钩子函数的，可以直接在constructor中定义this.state。此时可以访问this.props。
+
+3、componentWillMount()
+    组件初始化时只调用，以后组件更新不调用，整个生命周期只调用一次，此时可以修改state。
+
+4、 render()
+    react最重要的步骤，创建虚拟dom，进行diff算法，更新dom树都在此进行。此时就不能更改state了。
+
+5、componentDidMount()
+    组件渲染之后调用，可以通过this.getDOMNode()获取和操作dom节点，只调用一次。
+
+在更新时也会触发5个钩子函数：
+6、componentWillReceivePorps(nextProps)
+    组件初始化时不调用，组件接受新的props时调用。
+
+7、shouldComponentUpdate(nextProps, nextState)
+    react性能优化非常重要的一环。组件接受新的state或者props时调用，我们可以设置在此对比前后两个props和state是否相同，如果相同则返回false阻止更新，因为相同的属性状态一定会生成相同的dom树，这样就不需要创造新的dom树和旧的dom树进行diff算法对比，节省大量性能，尤其是在dom结构复杂的时候。不过调用this.forceUpdate会跳过此步骤。
+
+8、componentWillUpdate(nextProps, nextState)
+    组件初始化时不调用，只有在组件将要更新时才调用，此时可以修改state
+
+9、render()
+    不多说
+
+10、componentDidUpdate()
+    组件初始化时不调用，组件更新完成后调用，此时可以获取dom节点。
+
+还有一个卸载钩子函数
+11、componentWillUnmount()
+    组件将要卸载时调用，一些事件监听和定时器需要在此时清除。
+以上可以看出来react总共有10个周期函数（render重复一次），这个10个函数可以满足我们所有对组件操作的需求，利用的好可以提高开发效率和组件性能。
+
+为什么需要重新渲染组件？实质上，你想要的只是当路由变化，请求对应路由的数据而已。
+
+那么考虑一下React组件的生命周期钩子。第一次加载时:
+
+"constructor"
+"componentWillMount"
+"render"
+"componentDidMount"
+当组件的props发生改变时，组件更新，会调用如下的生命周期钩子
+
+"componentWillReceiveProps"
+"shouldComponentUpdate"
+"componentWillUpdate"
+"render"
+"componentDidUpdate"
+当路由变化时，即组件的props发生了变化，会调用componentWillReceiveProps等生命周期钩子
+
+to=对象，带参数跳转（pathname, query, hash, state(额外数据）），注意:这些参数都被存放到this.props.location中
+
+<li>
+    <Link to={ 
+        { 
+            pathname:"/jump", 
+            hash:'#ahash',  
+            query:{foo: 'foo', boo:'boo'},  
+            state:{data:'hello'}   
+        } 
+    } activeClassName="GlobalNav-active">点击跳转
+    </Link> 
+</li>
+
+接收
+    匹配的路由会成一个对象，对象里会有数据
+    <Route path='/m/play' render={(url)=>{
+        console.log(url) // 链接传过来的数据
+        return <Window {...obj}/>
+    }} />
+
+重定向
+    <Route exact path="/" render={() => (
+        <Redirect to="/10/90/50"/>
+    )}/> 
+
+
+    这里就自然地引出了 setState 的第二种使用方式，可以接受一个函数作为参数。React.js 会把上一个 setState 的结果传入这个函数，你就可以使用该结果进行运算、操作，然后返回一个对象作为更新 state 的对象：
+    ...
+      handleClickOnLikeButton () {
+        this.setState((prevState) => {
+          return { count: 0 }
+        })
+        this.setState((prevState) => {
+          return { count: prevState.count + 1 } // 上一个 setState 的返回是 count 为 0，当前返回 1
+        })
+        this.setState((prevState) => {
+          return { count: prevState.count + 2 } // 上一个 setState 的返回是 count 为 1，当前返回 3
+        })
+        // 最后的结果是 this.state.count 为 3
+      }
+
+react 组件默认设置
+    static defaultProps={
+        name:'yidao'
+    }
+
+props.children 和容器类组件
+    http://huziketang.com/books/react/lesson22
+
+    直接用组件标签包，NotesList里用props.children获取全部span
+        <NotesList>
+            <span>hello</span>
+            <span>world</span>
+        </NotesList>
+    用props.children获取到全部节点后，可以用React.Children.map遍历每一个span
+        React.Children.map(this.props.children,function(child){}
+
+react 传值，直接传state。取值直接取就行了，不用解构
+
+主页路由标签
+    <IndexRoute component={Home}/>  
+    任何需要跳转的地方使用this.props.history.push('/路径') 就可以进行跳转了
+
+写Link标签的时候一定一定要加上to属性，否则报错
+
+setState更新对象里的数据
+    this.state.navData.active=index;
+    this.setState({ 
+        navData:this.state.navData
+    });
+
+可上下、左右滚动，隐藏滚动条
+	1.用两个div嵌套。
+	2.外面的盒子overflow: hidden; 
+	3.上下拖动两个盒子的高要相同。里面的盒子宽要比外面的盒子大。样式里加overflow-y: auto;overflow-x: hidden;
+	4.左右拖动两个盒子的宽要相同。里面的盒子高要比外面的盒子高。样式里加overflow-x: auto;overflow-y: hidden;
+
+获取手机屏幕高度
+    document.documentElement.clientHeight
+获取手机的dpi(倍数)
+获取根html
+    document.documentElement
+    获取根元素html的字体大小
+        getComputedStyle(document.documentElement).fontSize
+
+filter 模糊 filter: 'blur(0px) sepia(50%)',
+
+传数据的时候直接可以...  
+函数接收的时候也可以直接解构，如： ({{img:{}}})=>{}
+
+解构后改名直接 :要改的名字 { num : n } = this.props;
+
+componentDidMount 获取数据后更新this.state，这时会渲染两次。
+可以定一个空白对象。如下：
+    let obj = {};
+    if(this.state.playListData){
+        let { data:{result:{coverImgUrl,description,name,tags,tracks:result,creator:{nickname,avatarUrl,backgroundUrl}}} } = this.state.playListData;
+        description = description.slice(0,58) + ' . . .' ;
+        obj = {coverImgUrl,description,name,tags,result,nickname,avatarUrl,backgroundUrl};
+    }
+
+
+字符串方法
+    split、substring、substr、includes、indexOf、search、trim、charAt、repeat
+
+react 父级拿子集的数据。在父级定义一个函数，在子级的生命周期只加载一次的时候调用，把数据传入函数里。
+
+ref技巧
+    ref={回调函数}。里边可以放一个回调函数，node就是它自己。
+    把自己(node)赋给了this.inp
+    <input ref={ (node) => {this.inp = node} } />
+
+react全家桶
+    安装react脚手架
+        npm i create-react-app -g
+    创建项目： 
+        create-react-app 项目名
+
+    安装react-router
+        npm install --save react-router-dom
+        装完可能会报错，因为yarn和npm冲突了。在项目文件夹重新安装依赖npm i
+
+    安装redux、react-redux、redux-saga 库
+        npm install redux react-redux redux-saga --save
+
+    安装redux-saga 处理异步操作
+        npm install --save redux-saga
+
+    安装axios
+        npm install axios --save
+        import axios from 'axios';
+        data = yield call(axios, action.payload.url);
+    
+    兼容ie
+        npm install --save babel-polyfill
+        入口文件***第一行***添加 import "babel-polyfill";
+
+    npm install --save react-router-config
+
+    开启css modules
+    npm install react-app-rewired --save-dev        https://github.com/timarney/react-app-rewired
+    npm install --save-dev less-loader less   
+    yarn add react-app-rewire-less-with-modules -D  https://github.com/LBC100/react-app-rewire-less-with-modules
+    
+
+    npm i dva-cli -g
+    react脚手架安装antd
+        npm install antd babel-plugin-import --save
+    dva new
+    
+    安装dva-loading
+        npm i dva-loading --save
+
+    dva安装antd
+        npm install antd babel-plugin-import --save
+        "extraBabelPlugins": [
+            ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }]
+        ]
+
+        "extraBabelPlugins": [
+            ["import", { "libraryName": "antd", "style": "css" }]
+        ]
+
+    安装react-bootstrap
+    npm install -g bower
+    npm install react-bootstrap --save
+    bower install react-bootstrap
+        使用以下css否则有bug
+            <!-- Latest compiled and minified CSS -->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+            <!-- Optional theme -->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">          
+
+简化actions
+    npm install --save redux-actions
+
+@装饰器
+    $ npm install --save-dev babel-plugin-transform-decorators-legacy
+
+    {
+        "plugins": ["transform-decorators-legacy"]
+    }
+
+import { delay } from 'redux-saga';
+    yield delay(1000); //延迟一秒
+
+takeEvery会在接到相应的action之后不断产生新的副作用。 比如，做一个计数器按钮，用户需要不断的点击按钮，对后台数据更新，这里可以使用takeEvery来触发。
+
+takeLatest在相同的action被触发多次的时候，之前的副作用如果没有执行完，会被取消掉，只有最后一次action触发的副作用可以执行完。比如，我们需要一个刷新按钮， 让用户可以手动的从后台刷新数据， 当用户不停单机刷新的时候， 应该最新一次的请求数据被刷新在页面上，这里可以使用takeLatest。
+
+react naative环境搭建
+    npm install -g react-native-cli
+    安装python2
+        https://www.python.org/downloads/windows/
+
+多个组件导出、导入
+    导出：export { A1, A2 }
+    放在顶行导入：import  { A1, A2 }  from '../../components/aaa';
+
+bindActionCreators 用来包装绑定Actions
+    import { bindActionCreators } from 'redux';
+    import * as actions from '../../actionCeators/actionCeators.js'; //action的集合，不推荐
+    import { INCREMENT, DECREMENT } from '../../actionCeators/actionCeators.js'; //推荐
+    没用之前
+    const mapDispatchToProps = (dispatch, ownProps) => {
+        return {
+            increment: (...args) => dispatch(actions.increment(...args)),
+            decrement: (...args) => dispatch(actions.decrement(...args))
+        }
+    };
+    使用后
+    const mapDispatchToProps = { } = (dispatch, ownProps) => {
+        return bindActionCreators({
+          increase: action.increase,
+          decrease: action.decrease
+        }, dispatch);
+      }
+
+简化actions
+    npm install --save redux-actions
+
+
+
+
+【npm uninstall xxx】卸载模块； 
+【npm uninstall -g xxx】删除全局模块xxx；
+
+去a链接下划线
+    text-decoration:underline;
+    
+flex 居中并两端对齐
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+
+chrom input输入框黄色背景去除?
+    input:-webkit-autofill, 
+    textarea:-webkit-autofill, 
+    select:-webkit-autofill { 
+          -webkit-box-shadow: 0 0 0 1000px white inset; 
+   }
+    input[type=text]:focus, input[type=password]:focus, textarea:focus {
+         -webkit-box-shadow: 0 0 0 1000px white inset; 
+   }
+   
+css提升权重
+    !important
+
+transform translate
+
+变小手   cursor:pointer;
+默认箭头 cursor:default;
+
+获取浏览器窗口宽高兼容代码，高度、宽度
+        var w = document.documentElement.offsetWidth || document.body.offsetWidth;
+        var h = document.documentElement.offsetHeight || document.body.offsetHeight;
+
+input和文字上下对齐
+    vertical-align: middle; 
+
+
+添加:节点.classList.add("类名"); 删除:节点.classList.remove("类名"); 
+
+git跳过代码检查
+    git commit --no-verify -m "2018-6-21-7"
+
+bootstrap 清浮动 clearfix
+
+上下、左右居中
+    -webkit-display:flex;
+    display:flex;
+    -webkit-align-items:center;
+    align-items:center;
+    -webkit-justify-content:center;
+    justify-content:center;
+
+上下居中
+    -webkit-display:flex;
+    display:flex;
+    -webkit-align-items:center;
+    align-items:center;
+
+左右居中
+    -webkit-display:flex;
+    display:flex;
+    -webkit-justify-content:center;
+    justify-content:center;
+
+水平两端对齐
+    display: flex;
+    -webkit-display: flex;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+
+平分nav
+   父元素
+        display: flex;
+        justify-content: space-between;
+        -webkit-display: flex;
+        -webkit-justify-content: space-between;
+    子元素
+        flex: 1;
+
+清除下拉框样式
+    /*很关键：将默认的select选择框样式清除*/
+    appearance:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+
+    /*清除ie的默认选择框样式清除，隐藏下拉箭头*/
+    select::-ms-expand { display: none; 
+
+改变input标签中placeholder显示的颜色
+    ::-webkit-input-placeholder { /* WebKit browsers */
+        color:    #A9A9A9;
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #A9A9A9;
+    opacity:  1;
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #A9A9A9;
+    opacity:  1;
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #A9A9A9;
+    }
+
+CSS设置滚动条样式（兼容IE）
+    在父元素加scroll类名
+        .scroll{
+            height: 254px;
+            overflow: auto;
+            padding-right: 8px;
+        }
+        .scroll::-webkit-scrollbar{
+            width:4px;
+            height:4px;
+        }
+        .scroll::-webkit-scrollbar-track{
+            background: #f6f6f6;
+            border-radius:2px;
+        }
+        .scroll::-webkit-scrollbar-thumb{
+            background: #aaa;
+            border-radius:2px;
+        }
+        .scroll::-webkit-scrollbar-thumb:hover{
+            background: #747474;
+        }
+        .scroll::-webkit-scrollbar-corner{
+            background: #f6f6f6;
+        }
+
+react 添加自定义属性
+    data_index={'index'}
+获取 自定义属性
+    console.log(ev.target.getAttribute("data_index"));
+
+react 更新数据时属性名为变量
+    this.setState({[name]:  e.target.value})
+
+导出函数集合(对象)
+    export function a1(text) {
+
+    }
+    export function a2(text) {
+
+    }
+
+    import * as actionCreators from './actionCreators' //不推荐
+    import { INCREMENT, DECREMENT } from '../../actionCeators/actionCeators.js'; //推荐
+
+导出、引入单个函数
+    导出
+        export default function dynamicWrapper () {
+            console.log('dynamicWrapper');
+        }
+    引入
+        import dynamicWrapper from '../../utils/dynamicWrapper'
+
+阴影
+    box-shadow: 0px 0 20px #e4e3e3;
+
+旋转
+    -moz-transform:rotate(180deg); 
+    -webkit-transform:rotate(180deg);
+   transform:rotate(180deg);
+   filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+
+react-router-config
+    key相同则不会重新渲染组件
+    {
+        path: '/',
+        exact: true,
+        component: Basic_layout,
+        key: 'Basic'
+      }, 
+      {
+        path: '/c2c',
+        component: Basic_layout,
+        key: 'Basic',
+      }
+
+vue全家桶
+    安装vue脚手架
+        npm install -g vue-cli
+            启动 npm run dev
+        npm install -g @vue/cli  //最新版
+            启动 npm run serve
+    添加“scoped”属性 CSS仅对此组件生效
+        <!-- <style scoped lang="less"> -->
+    父组件通过 v-bind:msg = 'msg' 传值给子组件
+        <!-- <Common_head v-bind:msg = 'msg' /> -->
+    子组件改变父组件数据
+        子组件定一个触发改变的函数，函数里写
+        this.$emit('change_f',"我是数据"); //参数1：事件名。父组件用得到。参数2：数据
+        父组件里的组件标签写上要触发的事件 v-on:change_f = 'jieshou($event)'
+        <!-- <Common_head v-bind:msg = 'msg' v-on:change_f = 'jieshou($event)' /> -->
+        在父组件里定一个接收的函数，并在函数里更新数据的逻辑。$event就是jieshou (msg) {}传入的参数(数据)
+        jieshou (msg) {
+            this.msg = msg;
+        }
+
+react组件获取history
+    withRouter高阶组件，提供了history让你使用~
+    import {withRouter} from "react-router-dom";
+    export default withRouter(MyComponent);
+
+某个字符串是否包含另一个字符串。字符串是否包含
+    var str = "123"
+    console.log(str.indexOf("2") != -1); // true
+
+
+js技巧结束
+
+
+11-22号
+    window.onload。当页面的所有静态资源加载完成之后触发
+        js尽量写在body结束标签的上面，如果要方在元素的上面，请使用window.onload
+
+    cssText：批量设置行间样式
+        注意：如果在行间已经有了样式，那么会覆盖。
+
+    innerHTML : 操作元素的内容（包括操作结构）。
+
+    innerText: 操作双标签中的文本
+
+11-23号
+    一般属性名怎么写，js操作就怎么写，但是class为保留字要使用className。
+
+    如果获取时，还没有点击，那么会获取最开始的那个值。（不要在还没被事件触发时获取值，不然获取的值会不准确）
+
+    {} 对象 (存储数据的)，对象中可以放任何数据，复合类型。 Object。key值 val值。
+        {}  对象 从对象中找某个值，那么对象.属性
+
+    []: 能用.的地方都能使用[],注意：如果中括号中没有引号，那么为变量。
+
+    以后写a标签的时候href中如果没有地址，那么写成 href="javascript:;"
+
+    字符串拼接。
+
+    读a标签的href是绝对路径，所以不能拿href去进行判断
+    读img标签的src是绝对路径，所以不能拿src去进行判断
+    获取background的时候，在不同的浏览器下显示是不同的
+
+11-24号
+    任何的数据类型 + 字符串 = 字符串。
+
+    typeof 一元运算符。
+        专门用来检测数据类型的。如：console.log(typeof (true + ''));
+
+    length 长度。
+        注意：字符串的length只能读不能写。
+
+    []  数组
+        它的length可读可写。
+        写操作：把原来的length数减少等于删除数组里的数据。
+        从数组中找某个值，那么数组[下标](下标必须是数字类型)
+        js计数是从0开始的
+        小技巧：找最后一个 -> length - 1; 第一个[0]。
+        数组中可以放一些数据。
+
+    getElementsByTagName。
+        获取标签名(一组，多个): 类数组（具有数组的一些特性(比如有length属性，可以使用下标)，但是它不是真正       的数组，因为用不了数组的方法）。
+        注意：
+            就算页面中只有一个标签，如果要使用，也必须加下标
+            要么在获取元素的时候加，要么在使用的时候加。
+
+    querySelectorAll()
+        用css选择器去获取"一组"元素
+        如：let btnS = document.getElementById('boxColo').querySelectorAll('button');
+            获取Id为boxColo的元素下的所有button标签。(.btn则为所有class为btn的标签)
+
+    querySelector()
+        用css选择器去获取一个元素
+
+    元素.classList.add('b1');     // 添加 b1这个 class
+    元素.classList.remove('b1'); //  删除 b1这个 class
+
+    for 循环
+
+    前++ 前-- 后++ 后--
+
+    图片切换
+
+11-27号
+    听写答案
+        1.获取元素有哪些方法？
+        2.学过的属性操作有哪些？各是什么意思？
+        当页面加载完成之后的事件是什么
+        5.拼写字符串、字符串模板。//ES6中的模板字符串   ``  ${}
+
+    控制流程
+        continue  跳过
+        break  跳出  不在循环了
+
+    全选、不选、全不选
+
+    数组数值求和。
+
+    找到数组中最大的值或者最小的值。
+
+    生成10个一排的div。
+
+    取余、循环套循环、99乘法表、
+
+    Infinity 和 -Infinity  （找最大或者最小值）
+
+    str += `<li>${i+1}</li>`  性能的优化
+
+11-28号
+    大清洗。性能没定点清除好。
+        Arr.map()，也可以大清洗。
+    var。 window上会自动挂一个变量的属性
+    let。 块级作用域。不是自动挂在window上的
+    this、选项卡。
+    自定义属性。
+
+11-29号
+    小技巧:
+        只要操作一个东西，要对应控制另一个东西，立马想到索引。
+
+    选项卡。定点清除。
+
+11-30号
+    数据类型。数据类型转换。
+    隐式类型转换、强制类型转换
+    判断数字是否为整数。
+    NaN
+    关系运算符、逻辑运算符
+
+三元运算符
+    0 < 1 ? '呵呵' : '嘻嘻';
+
+switch
+    符合哪个条件进哪个条件。
+
+while
+    循环次数不确定的时候用
+
+12-1号
+    函数声明：
+        function fn(){}
+            调用在定义上面或者下面都可以。
+
+        函数表达式：
+            let fn = function(){}
+            调用在声明之后，不然会报错
+
+    ***函数调用时()里传进来的是实参，对应函数体里的实参(注：函数体里的参数是实参和函数调用传进来的参数是对应的)。
+    ***函数声明()里的是形参。
+
+    函数传参
+        http://2017.miaov.com/v_show/1019
+
+    function fn(o,n) {          //弹10
+        o.fn(n); //o接收的是一个对象。相当于var了一个o对象，内容是fn:function (b) {alert(b)}
+    }
+
+    fn({
+        fn:function (b) {
+            alert(b)
+        }
+    },10);
+
+    封闭空间
+        在函数前后加()。一个函数就是一个域，域和域互不干扰
+        (function () {
+            alert(1)
+        })
+
+    函数自执行
+        函数前后加()后，不会报错，再在后面加多一个()，是表示调用这个函数。()里的参数可传可不传。
+        (function (a) {
+            alert(a)
+        })(1);
+
+
+    实参和形参是可以重名的，但是开发中不要重名。这个更好去理解，形参和实参
+
+12-4
+    作用域和作用域链。
+        从里到外，链条往外找
+        函数里没有“某个”变量就会往外面找，也可以改变外面变量的值。
+
+    var和function在预解析的时候是存在重名冲突的，重名function会覆盖var，后面重名的function会覆盖前面的重名     function
+
+    表达式可以改变预解析的值。
+        如果预解析留下的是一个a=function(){}。下面的代码又用表达式重新赋值，如var a = 3。那么调用a();会报错。
+        应为 a 已经赋值成数字 3 了。
+
+    预解析（var）
+    预解析（function）
+        如果2个函数的名字一样，那么后面的会把前面的覆盖。等同于第一个函数就从世界上消失了。
+    预解析参数。
+
+    预解析（既有函数也有var）。
+        如果一段js代码中既有函数也有var（同名的），那么直接走最后一个同名函数
+        ***注意:
+            就算var后面是个函数，也不算函数，只算变量。如：var a = function(){alert(5);预解析也是var        a=undefined
+
+    双script标签的问题
+
+    闭包。
+        闭包就是能够读取其他函数内部变量的函数。由于在Javascript语言中，只有函数内部的子函数才能读取局部变量，
+        因此可以把闭包简单理解成"定义在一个函数内部的函数"。
+        所以，在本质上，闭包就是将函数内部和函数外部连接起来的一座桥梁。
+
+        1、函数b嵌套在函数a内部；
+        2、函数a返回函数b。
+            把返回值存起来，再执行存起来的函数，a就不会被回收，a会被累加
+                function fn(){
+                    var a = 0;
+                    return function(){
+                        ++a;
+                        alert(a)
+                    }
+                }
+                var f = fn();
+                f();
+                f();
+
+12-5号
+    for in运算符。
+        for(var attr in b){}
+
+    arguments :
+        当函数的参数个数无法确定的时候适合使用arguments,如：传参求和。
+        实参的集合（类数组）修改arguments实参的值就发生变化了，一般来说，arguments的值是不允许改变的。
+        不写形参，arguments参数集合也传进来了，arguments[0/1/2...]可以取出来。
+
+    如果使用了call，apply写什么this就是什么。
+    call
+        第一个参数：
+        改变this指向
+        第二个参数之后为实参。
+
+    apply
+        第一个参数：
+        改变this指向
+        第二个参数为数组,里面放着实参
+        [1,2,3,4]
+
+    赋值赋址。
+
+    定时器
+        间隔型定时器: setInterval (函数,毫秒)  一直间隔执行  clearInterval(要关闭的定时器);
+        延迟型定时器: setTimeout  (函数,毫秒) 只执行一次     clearTimeout(要关闭的定时器);
+
+        let 定时器=null;
+        定时器 = setInterval/setTimeout(function(){要做的事},毫秒)
+
+        开定时器前先把定时器关一次消除帕金森
+            如果不停的点按钮setInterval会出现bug，这时可以每点击一次都先关一次clearInterval()
+            http://2017.miaov.com/v_show/1018
+
+        定时器运动
+            http://2017.miaov.com/v_show/1018
+
+    短信验证码、自动播放、移入移出例子
+        onmouseover 移入
+
+12-6号
+    for in获取对象里的数据循环生成样式。
+
+    时间对象。
+        new Date();
+                获取到当前*本机*的时间(这个时间是可以任意修改的)
+                获取月份的时候要+1
+                真正在开发中的使用服务器时间。
+                new Date(服务器时间)
+                Fri(星期) Dec(月份) 07(几号) 2018(年份) 00:00:00(时分秒) GMT+0800 (中国标准时间)
+                参数（目的是为了设置自己想要的时间）
+
+        自己设置时间  let date = new Date('2017 12 7 00:00:00')
+
+        let date = new Date(); Date要大写。这是获取当前时间
+        console.log(date.getTime()); //当前时间戳
+        console.log(+date); //date.getTime()简写方式
+
+        数码时钟、倒计时、时间转换公式、抖函数
+
+        时间转换公式。
+            let t = (newDate - nowDate) / 1000;    //先把毫秒转成秒
+            let iDay = Math.floor(t/86400);        //秒转天
+            let iH = Math.floor(t%86400/3600);     //秒转小时
+            let iM = Math.floor(t%86400%3600/60);  //秒转分钟
+            let Se = Math.floor(t%60);             //秒
+
+        getFullYear()  获取年 
+        getMonth()  获取月份  
+            注意:获取出来的数字比想要的数字少1，所以要+1
+        getDate()  获取天
+
+        getDay() 周几  0-6 (0属于周日)
+
+        getHours() 小时
+
+        getMinutes() 分钟
+        
+        getSeconds() 秒
+
+        getMilliseconds() 毫秒
+
+        以上返回值为number类型
+
+        设置时间：
+            setFullYear()
+            setMonth()
+            setDate()
+            setHours()
+            setMinutes()
+            setSeconds()
+            setMilliseconds()
+
+        getComputedStyle(div).height : 获取计算后的样式。
+        currentStyle获取计算后的样式。  兼容IE，不兼容标准浏览器
+        //兼容IE。获取计算后的样式。用法：getStyle(元素,'height')
+        function getStyle(obj,attr) {
+            return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj)[attr];
+        }
+
+12-7号
+    抖函数、图片上移加定时器、轮播图
+
+    对象浅拷贝。
+        Object.assign(); const obj3 = Object.assign(obj,obj2);
+
+12-8号
+    运动。
+    利用间隔定时器让div运动。
+
+12-11号
+    听写。
+        1、用对象去描述某段话。
+        2、var跟let的区别。
+        3、call跟apply，bind的区别。
+        4、什么叫函数返回值。
+        5、break和return哪有不同。
+        6、函数声明方式有哪些，什么是形参什么是实参，实参能传哪些数据类型？
+        7、你是如何理解作用域、作用域链、预解析的？
+        8、什么是闭包？为什么要用闭包？
+                1.函数套函数，子级引用着父级的参数或者变量，这个时候父级的参数或者变量就不会被回收
+                子级就形成了闭包环境()
+                2.就是想让父级的参数或者变量不被回收才用闭包。
+        11、什么是赋值，什么是赋址？
+                简单类型的赋值就是赋值
+                复合类型的赋值是赋址
+        12、如何将一个对象内容拷贝给另一个对象（2种方法）？
+                Object.assign(obj2,obj);
+                let arr2 = JSON.parse(JSON.stringify(arr));
+
+    Math 数学方法。
+        Math.ceil()  向上取整
+
+        Math.floor()  向下取整
+
+        Math.abs()  取绝对值。
+
+        Math.max();  最大  Math.min(100,10,30,0.5); //max返回值为最大的100
+        Math.min();  最小  Math.min(100,10,30,0.5); //max返回值为最小的0.5
+
+        Math.round(number); 四舍五入 返回是number
+
+    Math.random()。随机数。
+        原本是随机 0 - 1之间的无限不循环小数。
+        常用的取整公式
+        x ~ y : Math.round(Math.random()*(y-x) + x)
+        0 ~ x : Math.round(Math.random()*x)
+        1 ~ x : Math.ceil(Math.random()*x)||1
+        0 ~ x-1 : Math.floor(Math.random()*x)
+
+        如：//20-40之间   Math.round(Math.random()*(40-20)+20);
+
+    toFixed()。四舍五入
+        保留几位小数？返回值是个string(字符串)
+        3.14.toFixed(num); num为几就保留几位。3.141596.toFixed(2)  保留2位小数->返回值是个string(字符串)
+
+    借方法。
+        (利用apply第二个参数传数组的特性来把'arr'数组给Math.min方法运算。)
+        注：apply第一个参数为改变this指向。如下：
+        let arr = [100,10,30];
+        console.log(Math.min.apply(null,arr));//借方法来用
+
+12-12号
+    字符串截取 
+    字符串的length:只可读不可写。
+
+    string.charAt(索引)。动态方法
+        string.charAt(索引):主要为兼容IE7以下浏览器的跟str[0]一样。
+
+    string.split()
+        以某些字符为依据，把字符串分割出来，放到数组中。返回值是数组。一般会和数组的join()合用。
+
+        如果用字符串作为分隔符：
+            let str = 'ul,li';
+            str.split(',') -> ["ul","li"]
+        数组中没有了,号
+
+        如果用空字符串为分割符，那么会把字符串的每项分割出来放到数组中。
+            let str = 'ul,li';
+            str.split('') -> ["u", "l", ",", "l", "i"]
+
+    array.join()
+        以字符为链接符，链接数组的每项，并且转成字符串。一般会和字符串的split合用。
+        array.join('')，是直接链接数组。如下：
+            ["ul","li"].join('') ->ulli
+
+    string.indexOf()
+        找指定字符的索引(下标)
+            从左往右  找到指定位置的下标(返回值)。string.indexOf(指定字符,起始的位置);
+            *** 如果找不到就返回 -1
+            如果说某个字符串中有这个值，那么就可以这些写
+            if(string.indexOf('') != -1){}
+            设置本身的位置只能找到本身。如果要往后找，那么要在本身后 + num
+
+    lastIndexOf()
+        找指定字符的索引(下标)
+            从右往左找，找到指定位置的下标(返回值)。string.lastIndexOf(指定字符,起始的位置);
+            设置本身的位置只能找到本身。如果要往后找，那么要在本身后 - num
+    
+    保留2位小数        
+        parseFloat(num.toFixed(2))
+
+    str.slice()
+        如果只传一个参数,第几位开始截取直到整个字符串截完。
+            如：let str = miaov
+                str.slice(1)  -> iaov
+        如果传了2个参数：
+            第一个参数：
+                开始位置
+            第二个参数:
+                结束位置，但不包含结束位置
+                str.slice(1,4)  -> iao
+
+    str.substring()
+        substring(起始位置,结束位置但不包括结束位置)
+                str.substring(1,4)  -> iao
+        细节:
+            如果第一个参数比第二个参数的值要大，那么会颠倒顺序
+                str.substring(4,1)  -> iao
+            如果参数为负数看成0即可。
+
+    string.substr()
+        string.substr(从多少开始,截取个数)
+        第二个参数是多少就截多少字符
+            let str = 'miaov miaov';
+            str.substr(1,4)  -> iaov
+
+    number.toString(进制数)
+        把number转成指定的进制数。
+            let num = 116;
+            console.log(num.toString(2));
+
+    string.charCodeAt(index);
+        把指定的字符转成unicode编码值。
+        第一种写法:
+            'm'.charCodeAt();  109
+        第二种写法:
+            'miaov'.charCodeAt(0)  109
+            'miaov'.charCodeAt(1)  105
+
+    String.fromCharCode()
+        把指定的unicode编码值转成字符。
+        String.fromCharCode(109); //m
+
+12-13号
+    string.toLowerCase()。把大写字母转成小写字母
+        返回的是字符串 -> 把大写字母转成小写字母的字符串
+
+    string.toUpperCase()。把小写字母转成大写字母
+        返回的是字符串 -> 把小写字母转成大写字母的字符串
+
+    str.trim()。去掉前后空格。
+        低版本浏览器不兼容。
+
+    实现一个trim方法，兼容所有浏览器
+
+    str.startsWith('某个字符') 开头有没有包含某个字符(返回布尔值)
+        startsWith('包含的字符串',起始位置(默认从[0]开始))
+
+    str.endsWith('某个字符')。是不是以指定字符结尾的(返回布尔值)
+        endsWith(包含的字符串,起始位置但不包含起始位置)
+
+    includes()。字符串中有指定的值就true，没有就false
+        includes('包含的字符串',起始位置(默认从[0]开始))
+
+    string.repeat(num)
+        复制(重复)
+
+    str.padStart()。往前补全
+        str.padStart(补齐的长度（num）,'补全的内容')
+        https://www.w3cplus.com/javascript/learn-javascript-es-2017-string-padding-padstart-padend.html
+
+    str.padEnd()。往后补全
+        str.padEnd(补齐的长度（num）,'补全的内容')
+
+    数组的方法。
+        length:
+            可读可写
+
+        清空数组:
+            arr.length = 0;
+
+        push:
+            向数组的末位按顺序添加一个或多个数据。
+            返回值为新数组的长度。
+
+        pop(没有参数);
+            从末位删除1个数据
+            返回值:为删除的那个数据
+            注意：
+                添加多个参数也是删除最后一个，如：pop(4)也是删除最后一个
+
+        unshift
+            往数组首位按顺序添加1个或者多个
+            返回:新数组的长度
+
+        shift
+            往数组首位删除1个
+            返回:删除的那个数据
+            注意：
+                添加多个参数也是删除首位一个，如：pop(4)也是首位最后一个
+
+
+
+        通过下标去获取数组中的每个值。
+        可以使用for in循环
+        数组为对象类型，里面可以放所有的数据类型。
+
+        一般数组的方法是直接操作数组本身，而字符串一般是不会操作
+        本身的，一般需要使用返回值（赋值返回值）。
+
+12-14号
+    array.splice() 返回值为删除的内容
+        删除、添加、替换。
+        参数：
+            第一个参数：
+                起始位置
+
+            第二个参数：
+                如果写非0的正数字，那么为删除,数字是几就删除几个,返回值为删除的内容（数组）
+                如果为0,说明一个都不删，返回空白数组
+
+            第三个参数或三个之后的参数:
+                添加的数据
+            如：
+                arr.splice(0,1)        // 从第一个删除一个
+                arr.splice(2,0,3.3);  //  从第二个添加操作
+                arr.splice(2,3,'三');    //从第二个删除3个 然后替换操作  //[1,2,'三']
+
+    array.slice()
+        数组的截取方法，返回值为截取之后的*新*数组
+        slice(起始位置,结束位置但不包含结束位置)。默认从[0]开始产生相同的数组，可把类数组转数组
+        转数组：let arr = [].slice.call(类数组)
+        slice是**不会直接改变原数组**的。用返回值。
+
+    查找替换例子
+
+    array.join()
+        以字符为链接符，链接数组的每项，并且转成字符串。一般会和字符串的split合用。
+        array.join('')，是直接链接数组。如下：
+            ["ul","li"].join('') ->ulli
+
+    array.forEach()
+        数组的循环。
+        有2个参数:
+            第一个参数：
+                回调函数
+                    回调函数中还有3个参数
+                        1.循环中的每一个  arr[i]
+                        2.循环中每一个的索引（下标）i
+                        3.整个数组 arr
+            第二个参数:
+                改变this指向(写啥this就是啥)
+                默认this为window
+
+        ***forEach里for循环var时不要用'i'！
+        ***e和i是一一对应的！
+        forEach里return是拿不到的，是未定义。
+        没有break也没有continue
+        如果要要continue(跳过效果)那么可以使用return，但是类似break的东西就没有了
+        forEach的应用场景。
+
+    arr.sort()
+        数组排序。 arr.sort(可以接收一个回调函数) 使用返回值
+        返回一个排序好的数组
+        默认是从小到大排列，默认的排序方式是依据字符串比较的方式来排列的。如:'10'不大于'2'。以首位比大小
+        回调函数中**必须返回一个number**类型出去
+
+        a - b   为正数  就调换位置
+        a - b   为负数  就不掉换位置
+            console.log(arr.sort(function(a,b){
+                return a - b;                //从小到大
+                return b - a;                //从大到小
+                return Math.random() - 0.5;  //随机
+            }));
+
+    array.concat()
+        数组与数组链接的方法。
+        返回一个新的数组。
+        array.concat(可以有多个参数):
+            let arr = [1,2];
+            let arr2 = [3,4];
+            arr.concat(arr2,5,6,7,8) -> [1,2,3,4,5,6,7,8]
+
+    array.reverse()
+        翻转数组
+
+    every()
+        返回布尔值。使用返回值
+        查看数组中每个是不是都是统一的值，如果是返回true,否则false
+            //要所有的条件都为真，才返回true,否则false
+                let arr = [4,6]; //假
+                console.log(arr.every(function (e,i) {
+                    return e > 5;  //条件(遍历arr的每一个)
+                }));
+
+    some()
+        返回布尔值。使用返回值
+        查看数组中有没有设置好的值，如果有就返回true，没有就返回false
+            //只要有一个条件为真，就返回true。
+                let arr1 = [4,6]; //真
+                console.log(arr1.some(function (e,i) {
+                    return e > 5;  //条件(遍历arr1的每一个)
+                }));
+
+    arr.includes()
+        查看数组中是否包含某个数据。灵活性没上面两种好。
+
+    Array.from()
+        返回一个数组。
+        把类数组转数组。
+        Array.from([]|类数组)。功能一样：[].slice.call(类数组)
+
+    arr.filter()
+        过滤。
+        返回一个新数组。
+        查看每条数据，某条数据是否条件成立，把不成立的过滤掉，返回一个新数组
+        arr.filter(回调函数)非常好用
+
+    Array.find()
+            在数组中返回条件成立的数据。
+
+    Array.findIndex()
+        在数组中找到条件成立数据的下标
+
+    Array.map()
+        返回一个新的数组
+
+12-15号
+    对象json
+        标准写法  {'name':'小青'}。 "{'name':'小青'}"
+
+    json 转 对象
+        JSON.parse(对象);
+        注意:
+            json必须要是标准格式的,如果不是标准格式就会报错。JSON需大写
+
+    对象 转 json
+        JSON.stringify(对象);
+        注意:
+            stringify不能转函数和undefined的。JSON需大写
+
+    传入对象覆盖。-> 抖函数
+
+    低版本浏览器都用不了，JSON.parse、JSON.stringify。下载一个json2.js的文件就能使用了。
+
+    eval()
+        尽可能把能够执行的js代码执行，把字符串转js
+        容易被注入病毒。
+
+        一般使用的场景:
+            1.把一个不标准的json转成对象
+            2.低版本浏览器用不了JSON.parse,JSON.stringify
+
+        把一个不标准的json转成对象，前后要加'(' ')'。
+            let str = "{'name':'小云'}";
+            console.log(eval('(' + str + ')'));
+
+    toString()
+        toString -> 转成string
+        所有的数据自身都有toString方法
+
+    只要尝试去alert，会默认调用该数据的toString方法
+
+    赋值、赋址、拷贝对象
+
+12-19号
+    听写
+        1.咱们学的数学方法有哪些？
+        2.默写字符串的方法，各代表什么意思？
+
+    递归
+        js中就是自己调自己
+
+        小技巧：
+            使用递归的时候一定要给个终止递归的条件，不然就会死循环
+
+        报错说明递归:
+            Maximum call stack size exceeded
+
+    数组去重
+
+    git和github
+        git 工具
+            版本控制工具
+
+    github  社交网站（程序员们的基友网站）
+        可以作为代码托管
+
+    克隆
+        git clone
+        
+    本地仓库关联远程仓库
+        echo "# Exercise" >> README.md
+        git init
+        git add README.md
+        git commit -m "first commit"
+        git remote add origin git@github.com:LBC000/Exercise.git
+        git push -u origin master
+
+    生成秘钥:
+        ssh-keygen -t rsa -C "847129673@qq.com" 一路回车
+
+    测试查看关联
+        ssh -T git@github.com
+    git config --global user.jotoaoo@gmail.com "你提交分支的时候提交记录里显示的用户邮箱"
+
+
+    进入盘符：
+        cd d:
+
+    进入文件夹:
+        cd class
+
+    ls -> 查看当前文件夹有哪些文件
+
+    git status:
+        查看状态
+
+    按tab自动补全
+
+    工作区到暂存区
+        git add 文件名
+        git add .  批量提交到暂存区
+
+    暂存区到版本区
+        git commit -m "本次提交代码的描述注释"
+
+    建立本地仓库
+        git init
+
+    关联远程库。切换(Clone with SSH)
+        git remote add origin git@github.com:LBC000/Exercise.git
+
+    如果远程仓库有东西要先抓取下来
+        git pull origin master --allow-unrelated-histories
+        git merge origin/master
+
+    第一次推送的时候加-u
+        提交一次后用 git push origin master
+        git push -u origin master
+
+
+    通过git log查看版本
+
+    返回按 q 键
+
+    如果修改之前提交过的文件中的内容可以使用快捷提交版本区的方式提交
+        git commit -a -m "注释"
+
+12-21号
+    递归机测题
+
+12-22号
+    DOM(文档对象模型)
+    递归机测题。修复bug
+    结构：父级、子级、兄弟
+
+    祖孙节点  从下往上
+    子孙节点  从上往下
+
+    nodeType
+        查看节点类型(使用返回值)。用法：节点.nodeType。
+        如：box.childNodes[1].nodeType
+        常用的类型:
+            document  9
+
+            元素节点   1
+
+            文本节点   3
+            空格和文字都是文本节点，在一个元素中既有空格
+            又有文字，算一个文本节点。
+
+            注释节点   8
+
+            属性节点   2
+
+            http://www.w3school.com.cn/xmldom/dom_nodetype.asp
+
+    childNodes
+        所有子节点(包含文本节点，注释节点)。childNodes[num]  -> 所有节点的第几个
+            nodeName   节点的名字
+            nodeValue  节点的内容
+            tagName    大写标签   DIV
+                如：box.childNodes[0].nodeName/nodeValue/ box.tagName
+
+    children
+        children() 方法返回被选元素的所有直接子元素。
+
+    parentNode
+        子级.parentNode   找父级
+
+        如果一直向上找，那么就 子级parentNode.parentNode
+
+        页面中最大的是document
+
+12-25号
+    lastElementChild
+        最后一个子节点 ul(父元素下的).lastElementChild
+
+    firstElementChild
+        第一个子节点   ul(父元素下的).firstElementChild
+
+    previousElementSibling
+        上个兄弟节点。(要具体选中某个元素，不用父元素)
+
+    nextElementSibling
+        下一个兄弟节点。(要具体选中某个元素，不用父元素)
+
+    属性操作
+        用点添加的属性只能用点的方式获取。
+
+        获取属性：
+            box.getAttribute(属性名)
+            可以用来获取img的src来判断
+
+        设置属性:
+            box.setAttribute(属性名,属性值)
+
+        删除属性:
+            box.removeAttribute(属性名)
+
+        dataset (ES5)
+            自定义属性
+            直接添加
+                <li data-lx=1></li>
+
+        dataset 给行间添加属性的方式。如下
+            box.dataset.index = 0。 行间的样式为 data-index = 0
+
+            获取属性
+                元素.getAttribute('属性名')
+
+
+            删除属性
+                  box.removeAttribute('data-index2');
+                或box.dataset.index2 = '';
+
+    增删改
+        创建元素：
+            一般配合 parent.appendChild  parent.insertBefore 使用
+            document.createElement(标签名) -> <标签></标签>
+            let li = document.createElement('li');
+
+            appendChild
+                在末位追加元素 (要有一个父级)
+                parent.appendChild(追加的元素)
+
+            insertBefore
+                在前面添加元素 (要有一个父级)
+                parent.insertBefore(添加谁,往谁前面添加)
+                如果没有上一个就从末位追加
+
+
+        删除
+            parent.removeChild(删除的那个)
+
+            chrome浏览器自带
+                element.remove();
+
+        替换
+            一般要先创建
+            replaceChild()。前面要有一个父级
+            wrap.replaceChild(div2,box); 父级.replaceChild(新的元素,被替换的元素);
+
+    克隆
+        需要一个父级
+        cloneNode(true); true:还可以克隆子节点
+        wrap.insertBefore(新的元素,被克隆的元素);
+
+    动态方法和静态方法的区别
+
+    toggle
+        不用开关可以点击一次就打开，再点就关闭
+        this.nextElementSibling.classList.toggle('show');
+
+12-26号
+    offsetParent
+        找定位父级(元素)。 默认定位父级为body。如：box2.offsetParent。返回值为元素。
+
+        只要祖先级有定位那么，子级的定位父级为这个加了定位的元素
+
+        建议：
+            子级加定位父级也加定位。
+
+    offsetLeft
+        从子级的左外边框到定位父级的左内边框的距离
+        number类型
+
+    offsetTop
+        从子级的上外边框到定位父级的上内边框的距离
+        number类型
+
+    正常使用它
+        1.子级要有定位，定位父级也要有定位
+        2.子级和定位父级必须要触发haslayout(加宽高、zoom...)
+        3.清除默认样式(padding: 0;margin: 0;)
+
+
+    offsetTop\offsetLeft 火狐BUG
+        offsetTop\offsetLeft 火狐浏览器达到某些条件会有BUG，可以在外面套一层div解决
+
+    ele.getBoundingClientRect()
+        用于获取某个元素相对于视窗的位置集合。集合中有top, right, bottom, left等属性。
+        返回值:{}。 取top值为，ele.getBoundingClientRect().top
+        left,top,right,bottom 绝对位置（当前位置到视窗边的距离）
+
+    document.documentElement.clientHeight()。浏览器可视区的高度
+    document.documentElement.clientWidth()。 浏览器可视区的宽度
+
+    元素宽高
+        obj.offsetWidth  width + padding + border   占位宽高
+        obj.clientWidth  width + padding            内容宽高
+        obj.scrollHeight 内容高度 + padding          被内容撑开的高度
+
+    表格操作、箭头函数
+
+12-27号
+    BOM:
+        Browser Object Model 浏览器对象模型
+
+    window.open(url,打开的方式,可以设置浏览器窗口) 弹出新窗口的命令；
+        window.open('page.html', 'newwindow', 'height=100, width=400, top=0, left=0, toolbar=no, menubar=no,        scrollbars=no, resizable=no, location=no, status=no')
+            参数解释：
+            　　'page.html' 弹出窗口的文件名；
+            　　'newwindow' 弹出窗口的名字（不是文件名），非必须，可用空''代替；
+            　　height=100 窗口高度；
+            　　width=400 窗口宽度；
+            　　top=0 窗口距离屏幕上方的象素值；
+            　　left=0 窗口距离屏幕左侧的象素值；
+            　　toolbar=no 是否显示工具栏，yes为显示；
+            　　menubar，scrollbars 表示菜单栏和滚动栏。
+            　　resizable=no 是否允许改变窗口大小，yes为允许；
+            　　location=no 是否显示地址栏，yes为允许；
+            　　status=no 是否显示状态栏内的信息（通常是文件已经打开），yes为允许；
+
+    html里运行js代码
+        write() 与 writeln()
+
+    关闭窗口:
+        close()
+        在使用该方法的时候，IE会弹出一个提示框。 Chrome直接关闭
+
+    window.navigator.userAgent
+        浏览器用户信息。为字符串类型。可用来判断什么短(pc/手机/版本)
+        IE10及以下都是MSIE xx
+
+        注意:
+            这个信息容易被修改,只能做参考，不能100%肯定
+
+    window.location.href
+        地址栏地址
+
+    window.location.search
+        地址栏 ?到#号之间的信息(查询部分) 包括?
+
+    window.location.hash
+        从井号(#)开始的 URL (锚)
+
+    onhashchange
+        ***可以监听hash值的变化,只要hash值改变就会触发这个事件
+
+    ***改变hash值，页面是不会跳转的。
+
+    ***改变search值，页面是会跳转的。
+
+    hash，search都是可读可写的。hash小例子
+
+    窗口的尺寸
+        window.innerWidth
+            不计算滚动条的。(1366)
+        document.documentElement.clientWidth (1349只算可视区的)
+
+    document.documentElement.scrollTop 能读能写;
+        scrollTo(x,y)
+
+    window.pageYOffset只能读不能写
+        上滚动距离
+            document.documentElement.scrollTop
+            window.pageYOffset
+
+        左滚动距离:
+            document.documentElement.scrollLeft
+            window.pageXOffset
+
+    window.onscroll
+        当滚动条滚动的时候触发这个事件
+
+    window.onresize
+        窗口缩放的时候触发
+
+12-28号
+    懒加载
+
+    history
+        历史记录。***必须要在服务器下运行
+
+    obj.addEventListener
+        事件绑定: obj.addEventListener('不带on的事件名',事件函数,是否捕获(默认是false，不捕获))
+
+    obj.removeEventListener
+        解绑: obj.removeEventListener(要解除的事件名,要解除的函数名,boolean);
+            useCapture	可选。布尔值，指定移除事件句柄的阶段。
+        可能值：
+            true - 在捕获阶段移除事件句柄
+            false- 默认。在冒泡阶段移除事件句柄
+
+    用addEventListener绑定的事件，等于空解不了绑，等于空只能解传统事件绑定。document.onmouseup = null;
+
+        注意:
+            *** 解除的函数必须为有名函数，匿名函数解不了
+            如果添加两次事件句柄，一次在捕获阶段，一次在冒泡阶段，你必须单独移除该事件。
+
+    Event
+        事件对象
+            当用户触发某个事件的时候，记录下用户操作的一些细节的信息。
+
+        1.事件函数的第一个参数，一定是事件对象。
+        2.在IE和chrome中 全局有个event属性，就是事件对象
+
+    ev.target
+        事件委托。
+        事件源。可以通过触发父级事件直接找到触发这个事件的子级是谁。
+
+        *** 只能监听父级及以下的元素，兄弟级是监听不到的。
+        冒泡机制
+
+    事件模型
+        由window起从上而下直到目标点（捕获），到达目标点之后（目标阶段）
+        又从目标点由下而上直到window（冒泡）的整个过程就叫事件模型
+        1.捕获阶段：
+            从（window）上往下到目标点的阶段
+
+        2.到达目标阶段
+
+        3.冒泡
+            从（目标点）下往上到（window）的阶段
+
+        传统的事件是没有捕获的，只有冒泡。
+        ***目标阶段不用先走捕获，只走顺序绑定，同事件，同名函数的下面会把上面的覆盖。
+
+    ev.cancelBubble
+        取消冒泡。在目标点上取消，不让父级触发。
+        不是标准，但是别的浏览器都支持
+        box2.onclick = box3.onclick = function (ev)  {
+            ev.cancelBubble = true;
+        }
+
+    onmousemove
+        clientX/clientY  鼠标到可视区的距离（不包含滚动条的）
+        pageX/pageY  鼠标到浏览器顶端的距离（包含滚动条）
+
+    移动事件，div跟着走
+
+12-29号
+    焦点事件
+        el.onfocus=function:
+            聚焦
+        el.onblur=function:
+            失焦
+    聚焦
+        input.focus();
+
+    失焦
+        input.blur();
+
+    input的值选中
+        input.select();
+
+    键盘事件
+        onkeydown  键盘按下
+        onkeyup    键盘抬起
+        onkeypress 事件会在键盘按键被按下并释放一个键时发生。
+
+        ev.keyCode 获取到键值
+
+    小细节：
+    当通过键盘去监控（获取）输入的内容时，请使用onkeyup
+    因为onkeydown会少监听一次。
+
+    insertBefore：
+        如果第二个参数是没有的，那么等同于appendChild
+
+    addEventListener()
+        不管有没有写true，那么都有捕获的过程，只不过没监听而已
+        没监听不等于没有
+
+    注意：
+        如果使用组合键的时候，后面的键会把前面的键给覆盖
+
+        特殊键:
+            ev.shiftKey
+            ev.altKey
+            ev.ctrlKey
+            布尔值 按着就是true,否则false
+
+18-1-2号
+    addEventListener的细节
+        capture：
+            是否捕获  true就捕获,false冒泡
+
+        once:
+            只触发一次,掉用完之后就解除绑定。
+
+    注意：
+        如果在事件套事件的时候使用了addEventlistener，那么会出现重复绑定。
+
+    浏览器的默认行为:
+        你不想触发某个行为，浏览器偷偷的帮你触发了
+
+        传统的事件绑定阻止默认行为:
+            return false
+                document.onmousedown = function(){
+                    return false;
+                }
+
+        事件绑定阻止默认行为:
+            ev.preventDefault();
+                document.addEventListener('keydown',function(ev){
+                    if(ev.keyCode === 32){
+                        ev.preventDefault();
+                    }
+                }
+
+    oncontextmenu
+        弹出右键菜单
+
+    onscroll
+        只有滚动滚动条的情况下才会触发。window.onscroll = function(){}
+
+    onmousewheel
+        IE和chrome下。window.onmousewheel = function(ev){ console.log(ev.wheelDelta); }
+            ev.wheelDelta
+                上：180   正数
+                下: -180  负数
+
+    DOMMouseScroll
+        火狐浏览器。window.addEventListener('DOMMouseScroll',function(ev){ alert(ev.detail); }
+            ev.detail
+                上: -3   负数
+                下: 3    正数
+
+    input
+        t.focus();
+            自动聚焦
+
+        select：
+            选中文本,也可以拿来聚焦
+
+        oninput:
+            文本内容发生变化的时候触发
+
+    滚轮事件兼容谷歌、火狐(滚轮函数)。 滚动滑屏。 div键盘控制
+    滚轮事件函数封装，返回布尔值。true 上滚。false,下滚。
+
+18-1-3号
+    正常 移入、移出onmouseover;onmouseout
+    onmouseenter
+        移入
+
+    onmouseleave
+        移出
+        *** 不冒泡，穿透
+
+    事件名：
+        onclick、onmouseover、onmouseout、onmouseleave、onmouseenter、onmousedown、onmousemove、onmouseup
+        onkeydown、onkeyup、onresize、onscroll、onmousewheel、DOMMouseScroll、onchange、oninput、onfocus
+        onblur、onpopState、onhashchange、ondblclick
+
+    拖拽3大事件:
+        1.onmousedown
+        2.onmousemove
+        3.onmouseup
+
+    传统绑定的拖拽、事件绑定的拖拽、事件绑定的拖拽2(优化)、仿windows拖拽(有残影)、拖拽回放、
+    碰撞检测函数封装
+        返回布尔值。
+
+18-1-4号
+    鼠标框
+        哪个小就取哪个值。哪个值小哪个就作为基点
+        鼠标框碰撞
+
+    自定义滚动条。定义滚动条比例，核心就是这个比例。
+    带滚轮定义滚动条
+
+18-1-5号
+    放大镜。关键点在于比例。
+    div方向移动、招聘信息讲解
+
+18-1-8号
+    社会招聘讲解
+    hash
+    听写：1.什么是git，什么是github 2.如何才能版本控制？ 3.如何回滚指定版本？ 4.当提交代码的时候如果遇到了冲突           你是如何解决的？ 5.什么是DOM？ 6.常用的节点类型有哪些？各代表数字几？用什么属性去查？                         7.增删改查属性如何操作 8.父节点、子节点、上、下一个兄弟节点各是什么？ 9.DOM的添加、删除、克隆、替换的方
+          法有哪些 ？ 10.获取元素的宽度（带边框，不带边框，内容撑开的） 11.计算距离上下左右
+
+18-1-9、10号
+    微云
+
+18-1-15号
+    github分支
+
+18-1-24号
+    正则:
+        强大的字符串操作工具
+        擅长模糊范围字符串的检索
+
+    简写:
+        //
+    标准写法：
+        new RegExp(''||正则,修饰符)
+
+    \转义符
+        \ + 字母  会有特殊的意义，如下：
+            alert('通知:\\n今天下午不上课!'); 不换行
+            alert('通知:\n今天下午不上课!');  换行
+
+    修饰符：
+        i：不区分大小写
+        g：找全局
+
+    +
+        量词：(用来修饰前面的规则的)
+            修饰的前面看作一个整体
+            +号。最少有一个，最多不限、范围{}
+
+    检测字符串是否被正则匹配，如果匹配true，否则false
+        正则.test(字符串);
+            返回值（布尔值）
+
+    查找正则匹配到的下标，找到就返回下标，没找到返回-1
+        str.search(正则||字符串)
+
+    把正则匹配到的字符push到一个数组中
+        str.match(正则)。返回数组
+            返回值：
+                匹配上就返回数组
+                没匹配上为null
+            如果只匹配到一个，那么数组中有3个属性：
+                第一个：匹配到的字符
+                第二个：下标
+                第三个：整个字符
+                length还是1
+    替换
+        str.replace(字符串||正则,字符串||cb)
+            第一个参数：
+                替换谁
+            第二个参数:
+                替换成什么
+            cb回调函数里的参数
+                $0：当前正则匹配到的字符
+                $1：当前正则匹配到的字符索引下标
+                $2：整个字符
+                $3：undefined
+
+    子项：()
+        从左往右数
+        有子项走子项。
+        $0：当前正则匹配到的字符
+        $1：第一个子项
+        $2：第二个子项
+        $3：第三个子项
+
+    []
+        []中的整体内容代表一个字符
+        正则中指的是范围，指定的字符
+        0-9  数字的范围
+        大写到小写字母：
+            A-Za-z
+
+    ^：开头
+    $：结尾
+        ^(1[89])$
+            ^ 和 $ 是可以分开写的
+
+        如果在[]中有^，如[^v]。代表非。
+            代表排除v
+
+    (字符)+量词：
+        如：(字符)+
+        如果把字符当做子项，子项后面又有量词，子项为最后一个
+
+    |：或
+
+18-1-25号
+    重复子项
+        如：aa 11 gg
+        \num 重复一次，如果要重复多次加量词即可。
+        子项为第几个子项num就是几。
+
+    量词：
+        {} 区间范围
+            {n,m} 最小n,最大m
+            {n,}  最小n次，最大不限
+            {n}   最小最大都是n次
+            {1,}  == +
+            {0,}  == *
+            {0,1} == ?
+
+    \w 一个数字|字母|下划线
+    \w 非一个数字|字母|下划线
+    \d：一个数字
+    \D：一个非数字
+    \s：一个空格
+    \S：一个非空格
+    \b：一个边界符
+    \B：一个非边界符
+    .任意字符
+
+    \b 边界符
+    '|miaov| |ke| |tang|';
+    起始、结束、空格
+    字母加中文，中文是有边界的
+    中文与中文之间是没有边界。
+
+    表达式中有变量的时候就要用正则标准写法
+    正则需要传参的时候要用正则标准写法
+        let re = new RegExp('\\b'+ (变量) +'\\b');
+
+    中文的区间范围 /[\u4e00-\u9fa5]/
+    数组去重、找出字符最多的、解构赋值
+
+18-1-26号
+    js面向对象
+        把相同部分的代码提取出来封装成一个函数(类)，描述这个类型特性的方法挂在它的(类)原型链上的一种编程方式
+
+    三大特征：
+        抽象
+        封装
+        继承
+        多态
+
+    *构造对象*的函数叫做构造函数/工厂函数
+    构造函数返回出来的对象叫实例化对象。
+
+    面向对象的规则：
+        构造函数的首字母大写
+        *实例化的时候使用new。new 是专门用来运算函数的。运算其他的就会报错
+        new
+            函数的一元运算符，专门用来运算函数的。
+            new的时候可以可以不用加括号，加括号的情况为了传参。
+            new完之后构造函数中的this指向它的(返回值)实例化对象
+            new完之后默认的返回值变成了实例化对象
+            如果有return,要看return后面是什么数据类型，
+                如果是简单类型，那么返回实例化对象(就是那个函数)
+                如果是复合类型，那么就返回这个复合类型
+            new new 返回函数。是可以执行的，运算其他的就会报错
+
+    原型
+        prototype
+            当创建一个函数的时候，这个函数有很多的属性和方法。
+            其中有一个属性叫prototype，它就是原型。***它的属性值是一个对象***
+            constructor -> 指向构造函数
+            解决性能问题
+        等同于css的class
+
+        *****构造函数的原型只给该函数的实例化对象使用。
+
+        一般面向对象的写法
+            属性挂在构造函数中
+            方法挂在构造函数的原型下
+
+    原型链
+        实例对象与原型之间的链接，叫做原型链
+        对象上都有一个属性叫原型链
+        (__proto__隐式链接)
+        *****构造函数的原型只给该函数的实例化对象使用。
+        原型 与 原型链 的关系：
+            实例化对象的原型链 === 构造函数的原型
+        原型链的最外层：Object.prototype
+
+    找链的过程 function fn() {}
+        实例化对象、直接调用、大Function
+            对象走原型 链、
+            实例化对象
+                let f = new fn; 看内部有没有say，有走内部。没有走fn.prototype原型链。如果内部和fn的原型链都没                 设置就走 Object的原型链(因为实例化对象是一个对象)。不走大Function的原型链
+
+            直接调用
+                如果内部设定函数 Fn.say = function(){...}，走设定的函数
+                fn.say()。内部不设定函数就走大Function.prototype。如果 内部say属性 和 大Function.prototype                   都没设置就走Object的原型链(因为函数是一个对象)。不走实例化对象原型链(因为实例化原型链是专用的)
+
+            Object其实也是一个函数。所以也走大Function.prototype
+            Function是Function构造出来的。
+
+    *对象只有原型链。函数既有原型也有原型链。*构造函数的原型只给该函数的实例化对象使用。
+
+    一道正则面试题
+        let str = '我的名字叫{{name}},10年前我的年龄是{{age}};现在我的工作是{{job}}';
+    脏脏面试题
+
+18-1-29号
+    JS面向对象：
+        编程的思想，主要思想由谁来做（不是怎么做），
+        把具有相同特征的代码抽象出来归为一类,
+        把描述的细节挂在原型下。
+
+    实例化对象的原型链 === 构造函数的原型
+    只要是对象直接找链 -> 构造函数的原型
+
+    查看对象的构造函数
+        constructor
+        constructor，容易被修改。
+        只要构造函数的原型被赋址，那么constructor就会被修改。如果被修改，需要手动去修正
+        下面面这句话其实是等于赋址把系统的覆盖了，如果不写constructor:Aaa就不能指向函数本身
+            Aaa.prototype = {constructor:Aaa,name:'小明'}
+
+    这个属性是不是obj**自身**的。
+        返回布尔值。
+        obj.hasOwnProperty(属性名)
+
+    左值是不是右值构造出来的
+        A instanceof B :二元运算符
+        B 是不是 A 的老爹 (A必须要为一个对象)
+        左值是不是右值构造出来的
+        返回布尔值
+
+18-1-30号
+    包装对象
+        对象身上才能加属性或者方法
+        如果在null或者undefined身上加属性或者方法就报错。
+        别的简单类型为undefined
+
+        当去调用简单类型的属性或者方法的时候，系统会偷偷的把
+        这个简单类型转成对象类型，调用该对象下的属性或者方法
+        使用之后，自动销毁，这个过程就称为包装对象。
+
+    this出现的地方
+        1.事件触发的元素 ->触发的那个元素
+        2.函数直接调用  -> window
+        3.对象下的this -> 就是对象
+        4.定时器下的this指向window
+            定时器里面包着的函数this指向window
+                setTimeout(obj.fn,1000);// obj.fn ->  window.name:'';
+        5.构造函数下的this -> 实例化对象
+        6.()=> 的this 指向老爹
+        7.undefined  严格模式下
+        只要遇到有函数的情况下（也包括函数套函数），this非常容易被修改
+
+    继承
+        子类继承父类特征，自己也有一套自己的特性。
+        1、拷贝继承
+            属性继承
+                类式继承(借用构造函数)  call(this,1,2,3)
+            方法继承
+                通过浅拷贝、Object.assign、for in结合判断Drag.prototype.hasOwnProperty(attr)
+        2、原型继承
+            属性继承
+                类式继承(借用构造函数)  call(this,1,2,3)
+            方法继承
+                原型是一个对象
+                利用原型链的原理。把yx的实例化对象(在这里是一个{})赋址给Drag2的原型，这时Drag2的原型就是一个    {}，因为是赋址关系，所以同时Drag2的原型也拥有了yx实例化对象的原型链。通过yx实例化对象的原型链可以找到yx.prototype = Drag.prototype;
+                function yx() {}
+                yx.prototype = Drag.prototype; //yx构造函数的原型等于Drag.prototype
+                Drag2.prototype = new yx();   //new yx()为一个空的实例化对象
+                Drag2.prototype.constructor = Drag2; //把constructor指向重新改回Drag2
+
+    ***for in不但能够遍历当前对象上的属性，还能遍历原型上的属性
+
+    实例化对象上没有某个属性或者方法，那么还会去该对象的构造函数的原型上去找
+    实例化对象是一个对象(空间)
+    实例化 、原型链
+
+18-1-31号
+    听写
+        1.BOM中的可视区宽高
+            window.innerHeight/innerWidth
+        2.如何查看浏览器内核信息
+            window.navigator.userAgent
+        3.url的查询信息和锚信息分别是指哪段，如何获取？
+        4.什么是事件模型（事件流）？
+        5.什么情况下用得到事件对象？
+            当用户在浏览器上操作的时候，想获取到操作时的细节信息时
+        6.举例说明冒泡的好处和坏处？如何阻止冒泡？
+            好处:
+                事件委托、事件监听
+                    给父级绑定事件 通过ev.target找到子级
+            坏处:
+                在嵌套标签的时候，如果祖孙节点都绑定了相同的事件
+                触发了子孙级事件会触发祖先级的事件
+        7.自定义滚动条0-1之间的比例是如何求的？
+        8.什么是正则？它的常用方法有哪些，各代表什么意思？
+            专门用来操作检索模糊范围的字符串的一种规则工具
+            //.test(str)  返回布尔值  匹配成功?true:false
+            str.match(//)  返回数组   匹配成功?[]:null
+            str.search(//) 返回下标   匹配成功?index:-1
+            str.replace(''|re,''|cb); 替换
+        9.匹配16-118之间的数字
+        10.中文范围区间怎么写？
+        11.不用\b的方式来获取className
+        13.举例说明解构赋值（数组、对象）
+
+    利用toString做类型的判断
+        var arr = [];
+        alert( Object.prototype.toString.call(arr) === '[object Array]' )
+
+    当使用Object.create(),设置了value值之后。修改值是不会变的（依然是create的时候填写的）
+        在对象的值不能改变的情况下使用。
+            设置value的时候有以下几个属性
+            value:初始值（配置数据类型）
+            writable: true,  //可写（可修改）
+            enumerable: true,//可枚举（可循环）
+            configurable: true //可删除（可delete）
+
+    class类
+        class 对象名 {
+            constructor(){this.属性} //放属性
+            方法名 (){}
+        }
+
+    深度克隆、属性访问器面试题、***class(es6)，class继承***、vue中的双向数据绑定
+
+18-2-1号
+    组件化开发
+        问题：
+            有多个参数，其中一个参数不传为空的时候会报错
+            有多个参数，参数的顺序问题。
+    自定义事件
+        自定义事件几个要素
+            1.事件函数存储队列
+            2.事件监听器
+            3.事件触发器
+
+        使用自定义事件的好处
+            自定义事件相当于是 观察者模式，可以把复杂逻辑解耦，
+            代码可以写的很清晰，而且很容易复用。
+    有配置走配置，没配置走默认。
+        Object.assign(this.opt,json);
+        extend(this.opt,json)
+    A || B ： 如果A真，返回
+
+18-2-2号
+    react:(facebook出的)
+        用于构建用户界面的 JavaScript 库
+        让开发者只用专注数据即可，DOM的东西不用再考虑
+
+    安装nrm
+        npm i nrm -g
+        nrm test 去查看你的镜像速度
+        nrm use cnpm(最快的)  切换镜像
+
+    安装react
+        npm i create-react-app -g    安装react脚手架
+        npm install -g create-react-app
+
+    创建项目： create-react-app 项目名
+
+    在my-app目录下按着shift键不放，打开命令窗口
+        npm start
+
+    MVC不是框架（属于MVC的V层）
+        M: Model    模型      一般指的是数据
+        V: View     视图      html+css
+        C: control  控制器    状态（暂时当做事件）
+
+    ReactDOM.render(
+    第一个参数:组件,
+    第二个参数:挂在点,
+    第三个参数:回调函数（挂在完成）
+    )
+
+    import:
+        引入需要的文件(把整个文件导入进来)
+        import {变量名} from '文件的地址'            //只导入指定代码段
+        import浏览器不直接支持,需要通过babel去转
+        export {App,aaa};                           //导出可以传多个
+        import {App,aaa} from './reactDemo/App';    //引入多个
+
+    导出或引入的时候可以改名
+        {ff as xx}。ff 改为 xx
+
+    JSX语法: 一种 JavaScript 的语法扩展
+        JS XML ->
+        1.顶层只能有一个标签
+        2.class都要写成className
+        3.{}
+            1)花括号中可以直接写入js代码
+            2)[1,2,3,4] ->...  1 2 3 4 (如果是个数组，花括号会扩展开)
+        4.单标签必须加反斜线 如：<input />
+
+18-2-3号
+    添加事件函数的时候，事件函数默认的this为undefined
+    如果要让事件函数中的this指向类，方法有以下几种:
+        1.在绑定事件函数的时候使用bind(this)
+            this.Click = {this.click.bind(this)}
+        2.在constructor初始化this
+            this.click = this.click.bind(this);
+        3.如果使用create-react-app自带一种方式(默认开启初始化语法器)
+            click = () => {
+                this指向类
+            }
+
+    受控组件与非受控组件
+        在表单元素中，如果设置了value，那么会认定为受控组件
+        输入内容的时候表单元素是不会改变的。
+        解决方案:
+            1.给表单元素加上onChange,通过onChange去修改this.state的数据
+            表单的value等于this.state的val值
+            通过事件对象ev的target查看元素的value值
+
+        2.使用defaultValue。如：defaultValue={val}
+
+    在表单元素中，如果设置了value，那么会认定为受控组件，输入内容的时候表单元素是不会改变的。
+        解决方案：
+            1、给表单元素加上onChange，通过onChange去修改this.state
+
+    组件间的通信
+        父组件的数据，通过给子组件添加属性来传递数据
+
+    组件嵌套的时候，属性传值要传key，传了就行了，不用添加到标签里
+    如果要传父组件的全部属性用{...this.state}，如果传单个属性就再包一层花括号{...{this.state.data}}
+
+    *绑定事件时{}里一定要填值
+
+    class类对象，继承不了父组件的复合类型属性
+
+    在属性里直接写props
+        constructor(props){
+            super(props);
+            this.state = {arr:this.props.arr}
+        }
+        子级的constructor中的props只会走一次,
+        会接受父级传过来的第一次数据，就算父级数据更新
+        也不会再次更新props了
+
+    this.setState的第二个参数为数据更新之后的回调函数。
+        this.setState({},回调函数)
+
+    选中某个元素，在这个元素添加ref属性
+        添加属性  ref='input1'
+        获取元素  this.refs.input1
+
+18-2-6号
+
+18-2-8号
+    检测父级传过来的数据
+    插入本地图片
+        src={require('../img/icon1.png')}
+
+    子组件有需要的话可以设置自己的数据，改变子组件自己的this.state，页面会刷新。这时也可以同步父数据
+    数据从父组件接收解构过来后。可以做一些判断，把子组件的数据赋值到父组件的变量中。通过在父组件中设置状态属性。    如：random随机。 btn1Num是控制子组件一个按钮的两种状态。
+        if(id == 0){
+            txt = cTxt[num]
+        }
+
+18-2-9号
+    前端路由：
+        简单理解就是切换页面(组件)
+        hash
+        history
+
+    安装
+        npm install --save react-router-dom
+        装完可能会报错，因为yarn和npm冲突了。在项目文件夹重新安装依赖npm i
+        npm install --save react-router
+        yarn add install --save react-router-dom
+        
+        npm install react-router -S
+
+    1.引入react-router-dom
+    2.给根组件包上<!--<Router>-->标签对（只需要一个Router即可）
+        3.使用Route和Link
+        Route通过设置path="路径" 去引入哪个组件
+        exact:(精确模式)
+        没有写exact：
+        <!--<Route path="/" component={Home}>-->
+            如果你写/about 那么既会出现about也会出现Home
+
+            如果你写exact
+            <!--<Route exact path="/" component={Home}>-->
+                如果你写/about 那么只会出现about
+
+                Route可以不写component
+
+                可以使用render
+                render={({mathch})=>{
+                    <!--return <Tab1 />-->
+                }}
+                render中只要匹配到就会进这个函数中，并且返回对应的组件
+
+                Link 通过设置to="路径" 跳到哪个组件中
+                to=string   -> to="/about"
+
+                to=object  -> to={{
+                pathname:'/about',
+                search: '?sort=name',
+                hash: '#the-hash',
+                state: { fromDashboard: true }
+                }}
+
+                传入的数据，需要在对应的组件中的this.props的location中去获取to传递的数据
+
+                如果在Link中写上replace,是把之前的路由记录替换（点击浏览器回退键，不能回退）
+
+    前端路由：
+    简单理解就是切换页面（组件）
+
+    hash
+    histroy
+
+    3.前端路由的使用场景？
+
+    前端路由更多用在单页应用上, 也就是SPA, 因为单页应用, 基本上都是前后端分离的, 后端自然也就不会给前端提供路由。
+
+    4.前端路由优缺点
+
+    优点：
+    1.从性能和用户体验的层面来比较的话，后端路由每次访问一个新页面的时候都要向服务器发送请求，然后服务器再响应请求，这个过程肯定会有延迟。而前端路由在访问一个新页面的时候仅仅是变换了一下路径而已，没有了网络延迟，对于用户体验来说会有相当大的提升。
+    2.在某些场合中，用ajax请求，可以让页面无刷新，页面变了但Url没有变化，用户就不能复制到想要的地址，用前端路由做单页面网页就很好的解决了这个问题
+    缺点：
+
+    使用浏览器的前进，后退键的时候会重新发送请求，没有合理地利用缓存，
+
+18-2-10号
+    <!--render={(props)=>{ return <Home url={props}/> }} //传url-->
+    let {match} = this.props.url;                   //接收url对象再解构match
+
+2018-2-14号
+    一个组件里有时候需要在js里写两个小组件，一个组件专门放数据(循环)，一个专门放结构(私有的属性)
+
+2018-2-19号
+    react定时器问题
+        在componentDidMount设置setTimeout，然后在componentWillUnmount取消
+            // 如果存在this.timer，则使用clearTimeout清空。
+            componentWillUnmount(){this.timer && clearTimeout(this.timer)};
+
+    定时器setTimeout等等的回调函数使用箭头函数()=>{}，this不用修改
+
+    react native 安卓和ios阴影效果不兼容，安卓用elevation代替
+
+18-2-26号
+    异步的js和xml
+    前后端数据交互的技术，获取数据的技术
+    难点:
+        拿到数据该怎么做
+    以前。XML：数据格式，类似于html(自定义的html);
+    <person></person>
+    不单单指XML还有json格式
+        '[1,2,3]'
+        '{}'
+
+    注意：
+        在服务器环境中避免出现中文
+
+    优点：
+        不刷新页面，就能异步更新数据，给用户体验非常好
+        前后端相分离，减少了服务器的压力
+
+    ajax的交互模型：
+        get用法：
+            1、const ajax = new XMLHttpRequest;          //创建一个ajax对象
+            2、ajax.open('get','/get?name='+val,true);   //拨号，默认异步
+                ajax.open('get','地址?字段='+发送的值,true);
+            3、ajax.send();                              //发送
+            4、ajax.onload = function(){let json = JSON.parse(ajax.responseText);}//等待，通话
+                兼容浏览器ajax.onreadystatechange = ready;
+            
+        post用法：
+            1、const ajax = new XMLHttpRequest;
+            2、ajax.open('post','/post');       //参数1：请求方式，参数2：请求地址
+            3、ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded"); //请求头
+            4、ajax.send('user='+this.value);     //发送。字段+发送的值
+            5、ajax.onload = function(){let json = JSON.parse(ajax.responseText);}//等待，通话
+                兼容浏览器ajax.onreadystatechange = ready;
+
+    get与post的区别
+        get:
+            通过url的方式进行请求-把数据放到url上
+            1.体积有限制，每个浏览器都有最大限制url的规则，不同的浏览器体积大小也不一样
+            2.安全方面相对不安全,通过记录是可以拿到用户的信息的
+            3.可被浏览器缓存    
+            直接暴露出来的数据可以使用get方式
+
+        post:
+            通过服务器进行传输-把数据放到send中
+
+            1.理论上是无限制大小（但是一般后端童鞋会进行限制）
+            2.相对get会安全一些
+            3.设置请求头:
+                ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");  
+            4.请求不会被缓存
+
+
+    post更擅长处理敏感的信息，体积较大的数据
+    get更擅长处理暴露信息,体积小的数据
+
+    真正的验证只有后端来判断
+
+    如何查看接口
+        接口:
+            http://localhost/get
+            https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su
+
+        字段:
+            ?name=yangna
+            ?wd=2022&cb=fn
+
+    接口和字段都是由后端来提供的，一般都有开发文档
+
+    jquery的ajax、xml数据
+    
+    ajax可能出现的问题
+        在ie下，中文需要转成uri编码格式 encodeURI(数据)
+        ajax.open('get','/get?name='+encodeURI(this.value));
+        console.log(decodeURI('%E4%BD%A0'))
+    post在IE下，使用中文是没问题的。因为设置了请求头。
+
+2018-2-27号
+    同步：
+        
+    onload只支持IE9以上浏览器
+    onreadystatechange能监听ajax执行的步骤过程（一般用这个兼容所有浏览器）
+
+    每完成一个步骤就会就会执行一次函数，每次执行
+    函数都给你一个数字
+    0-4  -> 5步,但是0是监听不到的
+    数字4为步骤全部走完
+
+    0: 请求未初始化
+    1: 服务器连接已建立
+    2: 请求已接收
+    3: 请求处理中
+    4: 请求已完成，且响应已就绪
+
+    如果把onreadystatechange放在send之前，那么可以多
+    监听一步
+
+    封装ajax的步骤
+        1、创建一个函数
+        2、var一个默认配置opt对象。传输的是data，值是一个对象{username:this.value, pass:123456}
+        3、合并对象。有配置走配置没配置走默认
+            Object.assign(opt,json);
+            for(var attr in json){opt[attr] = json[attr];}
+        4、创建实例化对象XMLHttpRequest
+        5、//把data对象转成字符串name=xxx&pass=xxx
+            var arr = [];
+            for(var attr in opt.data){arr.push(attr + '=' + opt.data[attr]);}
+            opt.data = arr.join('&');
+
+2018-2-28号
+    解决:
+    标准浏览器 
+    利用 XMLHttpRequest() 与后端配合来解决。
+        问题 ：低版本的 XMLHttpRequest() 对象不支持与后端配合。
+        后端 ：  php :  header('Access-Control-Allow-Origin:*');
+
+    后端代理
+        后端去请求裸露的数据不会有跨域问题
+        后端先把数据取到当前服务器中，
+        然后前端通过 正常 的 ajax 请求来获取数据。
+
+    jsonp
+        json + padding
+        jsonp没有post请求
+
+        ****数据本身就是函数名 + 括号
+        需要在*全局*定义一个与数据函数名一样的函数
+            上面的代码可以直接调用下面的定义的fn
+        当需要使用数据的时候，创建一个script标签
+        把接口放到script.src中
+
+        script中的src会把引入文件中的代码尽量解析为js
+
+        fn([1,2,3,4]) ; 函数调用
+        
+        ajax没有函数名 + 括号
+
+    用eval()把不标准的json转成标准的json
+        也可以用Function方式
+        let fn = new Function('','return' + "{code:0,msg:'有介个银!'}");
+
+    同源策略:
+    同源策略（Same origin policy）是一种约定，它是浏览器最核心也最基本的安全功能，如果缺少了同源策略，则浏览器的正常功能可能都会受到影响。可以说Web是构建在同源策略基础之上的，浏览器只是针对同源策略的一种实现
+
+    同源：
+        相同域名、协议、端口
+    跨源(不同源):
+        不同域名、协议、端口
+
+    利用跨域实现搜索联想
+
+18-3-1号
+    解决跨域问题：
+        利用 XMLHttpRequest() + 后端header('Access-Control-Allow-Origin:*') 配合来解决。
+        后端代理：一个服务器文件可以访问第三方资源，这个服务器文件又跟前端同源，即实现跨域
+        jsonp:
+            jsonp没有post请求
+            1.数据格式就是函数名 + 括号
+            2.在全局定义一个能够接收数据的函数
+            3.请求：创建script标签，src='接口地址'，然后插入到前端文件中
+
+    在函数内设置全局变量或函数，windonw.fn = funtion(){}
+    
+18-3-2号
+    cookie:
+    其实它是一个后端的技术
+    指某些网站为了辨别用户身份、进行 session 跟踪而储存在用户本地终端上的数据
+
+    前端使用cookie的主要用途：进行本地存储（前端的数据库）
+        猜你喜欢
+
+    在老版本浏览器中存储的空间是很有限的，每个域名只能有xx条，一个浏览器能创建的 Cookie 数量最多为 300 个，并且每个不能超过 4KB，每个 Web 站点能设置的 Cookie 总数不能超过 20 个
+
+    *** 必须在服务器端环境下才能使用
+
+    设置:
+        document.cookie = 'key=val;'
+
+    cookie默认的生命周期:
+        在浏览器关闭之前
+
+    设置生命周期:
+    document.cookie = 'key=val;expires=生命周期的时间' 
+
+    如果存的是一个对象，那么内部会调用toString方法，所以要用JSON.stringify转一下
+    获取cookie
+            一次性会把所有的cookie都获取出来
+            key=val; users={"name":"王硕"}
+            cookie与cookie之间是通过; （分号+空格）来分割的
+
+    document.cookie = 'jguc_nav_li_index=1';
+    function getCookie(key){
+        var attr1=document.cookie.split('; ');//通过分号+空格把获取的cookie拆分；attr1存储cookie数组；
+        for(var i=0;i<attr1.length;i++){	//分别获取每一个cookie。cookie是由“名字=值”组成的；
+            var attr2=attr1[i].split('=');	//把名字与值拆分
+            if(attr2[0]==key){	//如果名字=参数（想要获取的cookie），则返回其值；
+                return attr2[1];
+            }
+        }
+    }
+    alert(getCookie('jguc_nav_li_index'));
+
+    localStorage--- 本地存储
+        localStorage还提供了一些监听事件
+            还提供了一些监听事件（onstorage）:当localStorage中的数据发生变化的时候，**兄弟**页面触发
+            (如：购物车)
+        存储量 5M
+        提供了非常方便的api
+        生命周期：永远存在
+
+        清空 localStorage
+            localStorage.clear()
+        存储数据 
+            localStorage.setItem("name",val)
+        读取数据
+            localStorage.getItem("name")
+        读取所有数据
+            localStorage.valueOf
+        读取第一条数据的变量名
+            localStorage.key(0) //可用来遍历，var i=0; i < localStorage.length; i++
+        删除某个变量
+            localStorage.removeItem("name")
+        检查是否保存某个变量，返回布尔值
+            localStorage.hasOwnProperty("name")
+        将joon存储到localStorage里
+            obj={name:'小明'}
+            obj=JSON.stringify(obj)
+            localStorage.setItem("数据",obj)
+            转回来
+            nweObj=localStorage.getItem("数据")
+            nweObj=JSON.parse(数据)
+
+    sessionstorage--本地存储
+    cookie函数封装
+        添加cookie
+            setCookie()
+        获取cookie
+            getCookie()
+        删除cookie
+            removeCookie()
+
+18-3-3号
+    componentDidMount方法中的代码，是在组件已经完全挂载到网页上才会调用被执行，所以可以保证数据的加载。
+    可以先在this.state里定一个空[]，数据加载完后再this.setState{}
+    Route组件还可以嵌套。
+    exact配置：
+        路径	 location.pathname	 exact	是否匹配
+        /one	/one/two	       true	    否
+        /one	/one/two	       false	是
+
+    strict配置：
+        路径	  location.pathname	strict	是否匹配
+        /one/	   /one	           true	    否
+        /one/	   /one/	       true	    是
+        /one/	   /one/two	       true	    是
+
+    同时，新版的路由为<Route>提供了三种渲染内容的方法：
+        <Route component>：在地址匹配的时候React的组件才会被渲染，route props也会随着一起被渲染；
+        <Route render>：这种方式对于内联渲染和包装组件却不引起意料之外的重新挂载特别方便；
+        <Route children>：与render属性的工作方式基本一样，除了它是不管地址匹配与否都会被调用；
+
+    TIPS: 第三坑！ <Route component>的优先级要比<Route render>高，所以不要在同一个<Route>中同时使用这两个属性。
+    <Switch>
+        该组件用来渲染匹配地址的第一个<Route>或者<Redirect>。
+
+    创建组件
+        const App = () => (
+            <div>
+                <Header />
+                <Main />
+            </div>
+        )
+
+    当路由地址匹配成功后，会创建一个含有以下属性的match对象：
+        url ：与当前location路径名所匹配部分
+        path ：路由的地址
+        isExact ：path 是否等于 pathname
+        params ：从path-to-regexp获取的路径中取出的值都被包含在这个对象中
+    匹配Topic成功时创建match对象。这个对象包含当前页面的信息和传过来的信息
+        取传过来的信息match.params.变量名
+            const Topic = ({match}) => ({match.params.topicId});
+
+18-3-5号
+    node的特性
+        Node.js 使用了一个事件驱动、非阻塞式 I/O 的模型、单线程，使其轻量又高效。 
+    require('http');引自带的模块 //服务器
+        const server = http.createServer()
+    require('./1');引自己的模块
+    请求:request （接收客户端的信息）
+    响应:response（发送给客户端信息）
+        write和end是一对,写了write必须写end
+            response.write()
+            response.end()
+    监听端口server.listen(80); 
+    const fs = require('fs');   //文件系统
+        异步地读取一个文件的全部内容
+            fs.readFile('路径',回调函数(err,data)) err就是失败，
+            data你要的数据一般数据都是Buffer格式的，要用toString()转一下
+                可以引入querystring模块
+        异步地写入数据到文件，如果文件已经存在，则替代文件。
+            fs.writeFile('写什么文件',内容,(err)=>{成功})
+        删除文件
+            fs.unlink(删除哪个文件,回调(err))
+
+    
+
+18-3-6号
+    不报错执行try，报错走catch
+        try{}catch{}
+    node.js框架express
+        安装npm install express --save
+            npm install body-parser --save
+            npm install cookie-parser --save
+            npm install multer --save
+        body-parser - node.js 中间件，用于处理 JSON, Raw, Text 和 URL 编码的数据。
+        cookie-parser - 这就是一个解析Cookie的工具。通过req.cookies可以取到传过来的cookie，并把它们转成对象。
+        multer - node.js 中间件，用于处理 enctype="multipart/form-data"（设置表单的MIME编码）的表单数据。
+    引入模块 const http = require('http');
+    导出模块 
+
+18-3-7号
+    webpack:
+        1、入口
+        2、出口
+        3、loader
+        4、插件
+    1、ES6 -> ES5
+
+    安装 
+    npm install --save-dev webpack
+    npm init
+    npm install webpack-cli --save-dev
+    config.webpack.js
+    webpack
+    Promise  async
+
+18-3-9号
+    reactjs101  
+    dva 
+    ant design
+    create-
+
+18-3-16号
+    redux
+    在触发action的时候返回值要为新的对象才会改变数据
+    简历：
+        突出（展现）你的能力
+        问以前的工作目的是想知道以前解决了什么问题，具备什么技能
+
+2018-03-18号
+    componentDidMount 是要渲染两次的。
+
+2018-3-20号
+    基础要扎实一点
+    有别于别人的亮点
+    刷面试题
+    和同事打好关系
+    态度要好、
+    有条件的话请求一些已有的项目，能借鉴着做
+    面试的时候把话题往自己会的方面引
+    社保：小公司没有缴纳
+    面试会问的问题：es6\es7 跨域 职业规划
+
+18-3-22号
+    jquery
+    delegate-> 事件委托就是原理
+    trigger
+    在事件套事件的情况下，在下层事件加上off()把上次的绑定解除。
+    在jq中阻止默认行为和冒泡都是return false
+
+18-3-23号
+    jquery的运动函数是走队列的，只要用jq的运动，在前面加上stop
+    requestAnimationframe 
+
+18-3-26号
+    当用户点击某个位置的时候，如果点击元素下有焦点元素那么在300毫秒之后，页面还会监听到这个位置
+
+18-3-29号
+    react proxy 
+    点击跳转到下一个页面的时候会记录滚动条的位置。可以清零滚动条来让页面到顶部。
+    parcel 打包器
+
+18-4-3号
+    npm install redux react-redux --save
+    npm install --save redux
+    npm install --save react-redux
+    npm install --save-dev redux-devtools
+
+    dispatch:触发器
+        subscribe:监听器
+        getState:获取数据
+
+    react-redux
+    Provider  根组件
+    connect   组件与数据连接
+
+    redux
+        createStore 操作数据的容器
+        combineReducers 如果有多个Reducer合并
+            combineReducers({reducer1,reducer2})
+        
+        applyMiddleware  激活中间件的
+
+        bindActionCreators  合并多个Creators
+            {add,rm,xx,yy,zz}  *  as Creators
+
+            bindActionCreators(Creators)
+
+    store 是redux提供的唯一数据源，它存储了整个应用的state，并且提供了获取state的方法，
+    即store.getState()。store是只读的。
+
+    redux没有提供直接修改数据的方法，改变state的唯一方法就是触发（dispatch） action 。
+
+    action 是一个用于描述已发生事件的普通对象。简单来说，就是“你干了一件什么事情”。
+    但是单单讲了你干的事情，我们并不知道你干的这件事产生了什么牛逼效果，
+    于是有了一个专门负责描述某个行动对应产生某种效果的机构，叫做 reducer 。
+
+    action本质上是一个普通的js对象，因为它只是一个用来描述事件的对象，先来两个现成的action看看：
+        {
+            type: 'CHANGE_NAME',
+            name: '葬爱'
+        }
+        
+        {
+        type: 'CHANGE_PICTURE',
+        picture: 'b.jpg'
+        }
+        action都会带一个type属性，这个属性是必选的，而其他的内容，比如name、picture等等，
+        都是可选的，它们是由action携带，最后传递给reducer的内容，就好比我说我要改名字，这是事件，
+        但是我没有说我要改成什么名字，这个操作就不完整，所以我还需要补充说，我要改名叫“葬爱”，
+        所以我还需要提供一个name给你，这才能完整实现一个动作。这些附属的参数，我们称为 payload（载荷）。
+
+        我们说过payload是可选的，也就是说，有些动作的触发是不需要其他信息的，比如“激活弹窗”、“关闭弹窗”等等，
+        这类动作只需要一个type就可以传达意思了：
+        于是，一个完整的触发动作是这样的：
+            // 修改名字
+            dispatch({
+            type: 'CHANGE_NAME',
+            name: '葬爱'
+            })
+            // 激活弹窗
+            dispatch({
+            type: 'SHOW_DIALOG'
+            })
+
+    reducer 只是一个接收state和action，并返回新的state的函数。
+    它就像是一部法典，根据你所做的事情，提供对应的后果，这个后果直接对数据源起作用。
+        我们已经知道如何触发一个动作，现在我们来了解如何接收并处理这个动作，也就是补充一个reducer。
+        可以认为，reducer就是根据传入的各种action不同，相对应对state进行处理，最后返回一个新state的函数。
+        那么可以推断出这个函数需要的参数至少是：当前的state，以及一个action。
+        事实也正是如此，下面是一个真实的reducer：
+        function reducer(state, action) {
+            switch (action.type) {
+              case 'CHANGE_NAME':
+              return {
+                card: {
+                  name: action.name, // 使用action携带的新name
+                  picture: state.card.picture  // 不需要修改，使用旧state的值
+                },
+                dialog: state.dialog  // 不需要修改，使用旧state的值
+              }
+          
+              case 'SHOW_DIALOG':
+              return {
+                card: state.card,  // 不需要修改，使用旧state的值
+                dialog: {
+                  status: true
+                }
+              }
+          
+              case 'CLOSE_DIALOG':
+              return {
+                card: state.card,  // 不需要修改，使用旧state的值
+                dialog: {
+                  status: false
+                }
+              }
+          
+              default:
+              return state  // 没有匹配的action type，返回原来的state
+            }
+          }
+
+    如上，reducer接收一个修改前的state和一个action，然后通过判断actionType的方式来进行不同操作
+    （没有匹配的actionType则默认返回原state），而这个操作的最终目的就是 拼装 一个新的state，
+    并最终return，这样就达到更新state的目的了！
+    看到这里你可能会有疑问，为什么不直接拿state，然后修改它state.card.name = action.name，
+    最后return state不就好了吗？这是一个不好的实践，因为state是一个对象，直接修改state是会对其他
+    引用了state的地方产生影响的，这种影响我们称为 副作用 ，而redux规定reducer必须是 纯函数 ，纯函数是没有副作用的。
+
+    我们回到上面的示例代码来，仔细观察这个state，我们发现它由两部分构成，分别是card和dialog，
+    但是这两者之间并没有关联，那么我们可不可以把它们拆分出来，分别管理呢？
+    我们可以试试看：
+        function cardReducer(state, action) {
+            switch (action.type) {
+            case 'CHANGE_NAME':
+            return {
+                name: action.name, // 使用action携带的新name
+                picture: state.card.picture  // 不需要修改，使用旧state的值
+            }
+        
+            default:
+            return state  // 没有匹配的action type，返回原来的state
+            }
+        }
+        
+        function dialogReducer(state, action) {
+            switch (action.type) {
+            case 'SHOW_DIALOG':
+            return {
+                status: true
+            }
+        
+            case 'CLOSE_DIALOG':
+            return {
+                status: false
+            }
+        
+            default:
+            return state  // 没有匹配的action type，返回原来的state
+            }
+        }
+        
+        function reducer(state, action) {
+            return {
+                card: cardReducer(state.card, action),
+                dialog: dialogReducer(state.dialog, action)
+            }
+        }
+        export default reducer
+
+    combineReducers
+    值得一提的是，redux对reducer的合并提供了一些便捷的方法，我们可以这么写：
+        function card(state={}, action) {
+            switch (action.type) {
+                case 'CHANGE_NAME':
+                return {
+                name: action.name, // 使用action携带的新name
+                picture: state.card.picture  // 不需要修改，使用旧state的值
+                }
+
+                default:
+                return state  // 没有匹配的action type，返回原来的state
+            }
+        }
+
+        function dialog(state={}, action) {
+            switch (action.type) {
+                case 'SHOW_DIALOG':
+                return {
+                status: true
+                }
+
+                case 'CLOSE_DIALOG':
+                return {
+                status: false
+                }
+
+                default:
+                return state  // 没有匹配的action type，返回原来的state
+            }
+        }
+
+        export default combineReducers({
+            card,
+            dialog
+        })
+        需要特别注意，使用combineReducers来合并reducer，需要子reducer的名字跟对应要接收的state的key一致，所以你看到上面我们把原来的子reducer名字分别从cardReducer和dialogReducer，改为了card和dialog。
+        给state一个默认值：state={}
+
+    这个由两个reducer组成的大reducer所实现的功能，跟之前只有一个reducer实现的功能是没有差别的！
+    我们成功地将原本比较笼统的reducer拆分成了多个专注于不同功能的reducer，如果你愿意的话，
+    还可以继续拆下去，但目前来看没有这个必要。
+    这是个很重要的思想！强调一遍，拆分reducer是一个很重要的思想，这是我们之后编写reducer的最基本方式。
+    我们可以看得出来，reducer的拆分规则是跟state的结构紧密相关的，所以很多时候拆分reducer并不是什么困难的事情。
+    
+
+
+
+    现在我们知道怎么修改数据源了，首先必须先定义好我们即将做的事情，也就是定义一个action，
+    跟着，我们需要相对应地补充我们做的这件事要怎么影响数据源，于是我们根据这个action补充了
+    一个reducer，最后我们触发这个action：store.dispatch(action)，数据源就会根据reducer
+    定义好的规则来更新自己了。
+
+    redux总结：
+        1.先建一个reducer文件夹。里边建reducer.js文件。reducer是一个运算state的纯函数。
+        reducer接收一个修改前的state和一个action，然后通过判断actionType的方式来进行不同操作
+        （没有匹配的actionType则默认返回原state），而这个操作的最终目的就是 拼装 一个新的state，
+        并最终return，这样就达到更新state的目的了！
+        函数里的state要设置一个默认值：state={}。导出使用combineReducers，import { combineReducers } from 'redux';
+
+        2.引入createStore，生成store。createStore函数放两个参数(reducer,初始化的state)。
+        初始化的state可以放在入口文件里。
+
+        3.组件获取props
+            一、创建一个函数
+                //获取props数据并返回
+                const mapStateToProps = (state)=>{
+                    return {
+                        name: state.card.name,
+                        picture: state.card.picture
+                    }
+                }
+            二、
+                //connect方法把把获取的数据传给Card
+                export default connect(mapStateToProps)(Card)
+        4.
+
+es5 和 es6 继承的区别。
+闭包
+
+18-4-5号
+    组件最好用函数做成无状态组件。传入的参数可以直接解构
+        const App = ({ value }) => (
+            <div>
+                <h1>{ value }</h1>
+            </div>
+        );
+        export default App;
+
+    store.dispatch({}),里的对象就是action。对应reducer的action
+
+    bindActionCreators用法：
+        /*
+            //actions.js
+            export function addTodo(text) {
+                return {
+                  type: 'ADD_TODO',
+                  text
+                };
+              }
+            //一起导出函数
+            import * as actionCreators from './actionCreators' //不推荐
+            import { INCREMENT, DECREMENT } from '../../actionCeators/actionCeators.js'; //推荐
+            import { bindActionCreators } from 'redux'
+
+            function mapStateToProps(state) {
+                return { todos: state.todos }
+            }
+
+            function mapDispatchToProps(dispatch) {
+                return { actions: bindActionCreators(actionCreators, dispatch) }
+            } 
+            export default connect(mapStateToProps, mapDispatchToProps)(Component)
+        */
+
+18-4-7号
+    npm install --save redux-saga
+    要使用到applyMiddleware中间件
+        import { createStore, applyMiddleware } from 'redux'
+        import createSagaMiddleware from 'redux-saga'
+
+        import reducer from './reducers'
+        import mySaga from './sagas'
+
+        // create the saga middleware
+        const sagaMiddleware = createSagaMiddleware()
+        // mount it on the Store
+        const store = createStore(
+        reducer,
+        applyMiddleware(sagaMiddleware)
+        )
+
+        // then run the saga
+        sagaMiddleware.run(mySaga)
+
+        import { call, put } from 'redux-saga/effects'
+        import { takeEvery } from 'redux-saga'
+
+        export function* fetchData(action) {
+            try {
+                const data = yield call(Api.fetchUser, action.payload.url);
+                yield put({type: "FETCH_SUCCEEDED", data});
+            } catch (error) {
+                yield put({type: "FETCH_FAILED", error});
+            }
+        }
+
+        function* watchFetchData() {
+            yield* takeEvery('FETCH_REQUESTED', fetchData)
+        }
+
+        import { takeEvery } from 'redux-saga'
+        对于多个 actions 有多个 Sagas 进行处理，相应的有多个辅助函数：
+            // FETCH_USERS
+            function* fetchUsers(action) { ... }
+
+            // CREATE_USER
+            function* createUser(action) { ... }
+
+            // use them in parallel
+            export default function* rootSaga() {
+                yield takeEvery('FETCH_USERS', fetchUsers)
+                yield takeEvery('CREATE_USER', createUser)
+            }
+
+
+        // 同时执行一个入口的多个 Sagas
+        export default function* rootSaga() {
+            yield all([
+                helloSaga(),
+                watchIncrementAsync()
+            ])
+        }
+
+18-4-9号
+    Promise
+        一般来说我们会碰到的回调嵌套都不会很多，一般就一到两级，但是某些情况下，回调嵌套很多时，
+        代码就会非常繁琐，会给我们的编程带来很多的麻烦，这种情况俗称——回调地狱。
+        当Promise的状态由pending转变为resolved或rejected时，会执行相应的方法，并且状态一旦改变，
+        就无法再次改变状态，这也是它名字promise-承诺的由来
+
+        var promise = new Promise(function(resolve, reject) {
+        if (/* 异步操作成功 */){
+            resolve(value);
+        } else {
+            reject(error);
+        }
+        });
+
+        promise.then(function(value) {
+            // success
+        }, function(value) {
+            // failure
+        });
+        promise.then(function(value) {
+            console.log(value);
+        }).catch(function(value){
+            console.log(value);
+        });
+
+2018-4-13号
+    dva new 
+    yarn add roadhog -g
+    不要安装中文网的node.js(有报错风险)。安装英文原版的。
+        路由#
+            目前在脚手架中，除了顶层路由，其余路由列表都是自动生成，其中最关键的就是中心化配置文件 src/common/router.js，
+            它的主要作用有两个：配置路由相关信息。如果只考虑生成路由，你只需要指定每条配置的路径及对应渲染组件。
+            输出路由数据，并将路由数据（routerData）挂载到每条路由对应的组件上。
+
+            src/rouuter.js是顶层路由。它里边有一个函数RouterConfig，参数是一个对象，对象直接解构{ history, app }
+
+    index.j导入dav(dav是一个函数)。在dav函数里放入一个对象生产一个app。如：const app = dva({
+        history: createHistory(),
+      });
+
+      src/router 下的routerData 是引用 src/common/router.js 的getRouterData
+
+      Effect 被称为副作用，在我们的应用中，最常见的就是异步操作，Effects 的最终流向是通过 Reducers 改变 State。
+    
+2018-4-16号
+    目录结构
+        mock 存放用于 mock 数据的文件；
+        public 一般用于存放静态文件，打包时会被直接复制到输出目录(./dist)；
+        src 文件夹用于存放项目源代码；
+            asserts 用于存放静态资源，打包时会经过 webpack 处理；
+            components 用于存放 React 组件，一般是该项目公用的无状态组件；
+            models 用于存放模型文件
+            routes 用于存放需要 connect model 的路由组件；
+            services 用于存放服务文件，一般是网络请求等；
+            utils 工具类库
+            router.js 路由文件
+            index.js 项目的入口文件
+            index.css 一般是共用的样式
+        .editorconfig 编辑器配置文件
+        .eslintrc ESLint配置文件
+        .gitignore Git忽略文件
+        .roadhogrc.mock.js Mock配置文件
+        .webpackrc 自定义的webpack配置文件，JSON格式，如果需要 JS 格式，可修改为 .webpackrc.js
+
+
+    namespace
+        model 的命名空间，同时也是他在全局 state 上的属性，只能用字符串，不支持通过 . 的方式创建多层命名空间。
+    
+    state 
+        数据
+    
+    reducers 
+        处理数据
+    
+    effects  
+        以 key/value 格式定义 effect。用于处理异步操作和业务逻辑，不直接修改 state。由 action 触发，可以触发 action，可以和服务器交互，可以获取全局 state 的数据等等。
+    
+    subscriptions
+        以 key/value 格式定义 subscription。subscription 是订阅，用于订阅一个数据源，然后根据需要 dispatch 相应的 action。在 app.start() 时被执行，数据源可以是当前的时间、服务器的 websocket 连接、keyboard 输入、geolocation 变化、history 路由变化等等。
+        格式为 ({ dispatch, history }, done) => unlistenFunction。
+
+    CSS Modules#  CSS Modules 只会对 className 以及 id 进行转换
+        在样式开发过程中，有两个问题比较突出：
+            全局污染 —— CSS 文件中的选择器是全局生效的，不同文件中的同名选择器，根据 build 后生成文件中的先后顺序，后面的样式会将前面的覆盖；
+            选择器复杂 —— 为了避免上面的问题，我们在编写样式的时候不得不小心翼翼，类名里会带上限制范围的标识，变得越来越长，多人开发时还很容易导致命名风格混乱，一个元素上使用的选择器个数也可能越来越多。
+            
+        为了解决上述问题，我们的脚手架默认使用 CSS Modules 模块化方案，先来看下在这种模式下怎么写样式。
+            // example.js
+            import styles from './example.less';
+            export default ({ title }) => <div className={styles.title}>{title}</div>;
+            
+        不过有的时候，我们就是想要一个全局生效的样式呢？可以使用 :global。
+            /* 定义全局样式 */
+            :global(.text) {
+              font-size: 16px;
+            }
+            
+            /* 定义多个全局样式 */
+            :global {
+              .footer {
+                color: #ccc;
+              }
+              .sider {
+                background: #ebebeb;
+              }
+            }
+
+2018-4-17号
+    import { connect } from 'dva';
+    
+        
+    model可以有很多个只要app.model方法运行了store里就有数据
+        app.model(require('./models/login').default);
+    
+    组件取数据。在组件的上面写：
+        @connect(({ index }) => ({
+            index,
+        }))
+        
+        传入的index就是model的数据。
+
+
+    @connect(
+        state=>state.main,
+        dispatch=>bindActionCreators(action,dispatch)
+    )
+
+触发reducers
+    dispatch({ 
+        type: 'Floa_window/hide_fl_win', //要执行的action，模块名/要执行的reducer
+        payload: 1                      //附带的数据
+    })
+
+    //参数1：state是原来的数据。参数2：action是传进来的action(有时附带数据，有时不附带)
+    reducers: {
+        hide_fl_win (state, action) {
+            console.log(state, action)
+            return {
+                show: false
+            }
+        } 
+    },
+
+2018-4-18号
+    字体图标
+        npm install --save react-fontawesome
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+    简单响应式
+        容器组件用百分比
+            .container{
+                width: 85%;
+                margin: 0 auto;
+            }
+        盒子用栅格系统
+
+2018-4-19号
+    获取浏览器窗口宽高兼容代码
+        var w = document.documentElement.offsetWidth || document.body.offsetWidth;
+        var h = document.documentElement.offsetHeight || document.body.offsetHeight;
+
+2018-4-20号
+    requestAnimationFrame
+    css最小高度
+        min-height: { min-height: 655px; }
+
+2018-4-24号
+    class A1 extends Component {
+    render() {
+        return (
+        <div>123</div>
+        );
+    }
+    }
+
+    A1.Head = class Head extends Component {
+    render() {
+        return (
+        <div>我是头部</div>
+        );
+    }
+    }
+    <A1.Head />
+
+2018-5-31号
+    npm init
+    npm install --save-dev webpack
+    同时安装React和React-DOM
+        npm install --save-dev react react-dom
+    npm install --save react-router-dom
+
+2018-6-11号
+    //字符串/替换
+        strRepl = (str) => {
+            if(str == '/') {
+                return str.replace('/', '')
+            }else {
+                console.log(123)
+                return str.replace(/\//g, '_')
+            }
+        } 
+
+2018-6-21号
+    浏览器地址跳转
+        window.location.href    
+
+2018-7-11号
+    dva
+    react Route Config
+    组件按需加载
+    Model绑定组件
+
+    import dynamic from 'dva/dynamic';
+    //把函数放router.js下，修改路径。否则会出现路径不一致的错误
+    //参数一：app对象。参数二：所需model。参数三：需要绑定model的组件。
+    function dynamicWrapper (app, models, component) {
+        return dynamic({
+            app,
+            models: () => models.map(m => import(`./models/${m}.js`)),
+            component,
+        })
+    }
+
+2018-8-3号
+    判断是否为微信浏览器
+        function is_weixn(){  
+            var ua = navigator.userAgent.toLowerCase();  
+            if(ua.match(/MicroMessenger/i)=="micromessenger") {  
+                return true;  
+            } else {  
+                return false;  
+            }  
+        }
+
+2018-8-6号
+    判断ios端和安卓端
+    var mm_userAgent = navigator.userAgent, app = navigator.appVersion;
+    var isAndroid = mm_userAgent.indexOf('Android') > -1 || mm_userAgent.indexOf('Linux') > -1; //g
+    var isIOS = !!mm_userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    if (isAndroid) {
+        console.log('安卓')
+        //这个是安卓操作系统
+    }
+    if (isIOS) {
+        console.log('ios')
+　　　　//这个是ios操作系统
+    }
+
+    <script type="text/javascript">
+        /*智能机浏览器版本信息:*/
+        var browser={
+          versions:function(){
+            var u = navigator.userAgent, app = navigator.appVersion;
+            return {//移动终端浏览器版本信息
+              trident: u.indexOf('Trident') > -1, //IE内核
+              presto: u.indexOf('Presto') > -1, //opera内核
+              webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+              gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+              mobile: !!u.match(/AppleWebKit.*Mobile.*/)||u.indexOf('iPad') > -1, //是否为移动终端
+              ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+              android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+              iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+              iPad: u.indexOf('iPad') > -1, //是否iPad
+              webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+            };
+          }(),
+          language:(navigator.browserLanguage || navigator.language).toLowerCase()
+        }
+          
+        document.writeln("语言版本: "+browser.language+"<br/>");
+        document.writeln("是否为移动终端: "+browser.versions.mobile+"<br/>");
+        document.writeln("ios终端: "+browser.versions.ios+"<br/>");
+        document.writeln("android终端: "+browser.versions.android+"<br/>");
+        document.writeln("是否为iPhone: "+browser.versions.iPhone+"<br/>");
+        document.writeln("是否iPad: "+browser.versions.iPad+"<br/>");
+        document.writeln(navigator.userAgent);
+
+        //是否为移动端
+        if (mobile_bs.versions.mobile) {
+            if (mobile_bs.versions.android || mobile_bs.versions.iPhone || mobile_bs.versions.iPad || mobile_bs.versions.ios) {
+                window.location.href = "移动端网址";
+            }
+        };
+
+        if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
+            var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
+            if (ua.match(/MicroMessenger/i) == "micromessenger") {
+                //在微信中打开
+                setInterval(WeixinJSBridge.call('closeWindow'),2000);
+            }
+            if (ua.match(/WeiBo/i) == "weibo") {
+                //在新浪微博客户端打开
+            }
+            if (ua.match(/QQ/i) == "qq") {
+                //在QQ空间打开
+            }
+            if (browser.versions.ios) {
+                //是否在IOS浏览器打开
+            } 
+            if(browser.versions.android){
+                //是否在安卓浏览器打开
+            }
+        } else {
+            //否则就是PC浏览器打开
+            window.close();
+        }
+
+        if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+            alert('客户端');
+        } else {
+            alert('PC端');
+            console.log('PC端');    
+        }
+    </script>          
+  
+
+强制不换行 
+    p { white-space:nowrap; }
+    
+自动换行 
+    p { word-wrap:break-word; }
+    
+强制英文单词断行 
+    p { word-break:break-all; }
+
+2018-8-7号
+    rem布局
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+        <script src="./lib-flexible.js"></script>
+    自适应布局
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+2018-8-13号
+    更改svg图片颜色
+        用记事本打开svg图片，在svg标签上添加style="fill: #17a7f3" 即可。
+
+2018-8-16号
+    react-cookie 的使用
+        name 值不能为中文。
+            import { withCookies, Cookies } from 'react-cookie';
+            import { instanceOf } from 'prop-types';
+
+        地址
+            https://github.com/reactivestack/cookies/tree/master/packages/react-cookie
+        安装
+            npm install react-cookie
+
+        用CookiesProvider 标签包根组件来传递 cookies 对象
+            import { CookiesProvider } from 'react-cookie';
+            <!-- 
+            <Provider store={store} >
+                <CookiesProvider>
+                    <App />
+                </CookiesProvider>
+            </Provider> 
+            -->
+        获取 cookies 的组件添加 static propTypes
+            class App extends Component {
+                static propTypes = {
+                    cookies: instanceOf(Cookies).isRequired
+                };
+            }
+        
+        用withCookies 方法包裹组件来获取 cookies 对象
+            import { withCookies, Cookies } from 'react-cookie';
+            export default withCookies(App);
+        
+        使用方法
+            const { cookies, allCookies } = this.props;
+            cookies.get()
+            cookies.set()
+                name（字符串）：cookie名称
+                value（string | object）：保存值并根据需要对对象进行字符串化
+                options（object）：支持RFC 6265中的所有cookie选项
+                    path（字符串）：cookie路径，/如果您希望在所有页面上都可以访问cookie，请将其用作路径
+                    expires（日期）：cookie的绝对到期日期
+                    maxAge（number）：客户端以秒为单位收到cookie时的相对最大年龄
+                    domain（字符串）：cookie的域（sub.domain.com或.allsubdomains.com）
+                    secure（boolean）：只能通过HTTPS访问吗？
+                    httpOnly（boolean）：只有服务器才能访问cookie吗？
+            cookies.remove()
+
+            
+    
+
+
+                
+            
+        
+                
+        
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

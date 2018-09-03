@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .root{
+            /* min-width: 1000px; */
+        }
+        .box{
+
+        }
+        .box .active{
+            color: red;
+            background: #000;
+            width: 100px;
+            float: left;
+            white-space:nowrap; 
+        }
+        .box2{
+            width: 500px;
+            float: right;
+            background: red;
+            white-space:nowrap; 
+        }
+    </style>
+</head>
+<body>
+    <div class="root">
+        <div class="box">
+            <span class="active">123</span>
+        </div>
+        <div class="box2 active">
+            123
+            <span>456</span>
+        </div>
+    </div>
+</body>
+</html>

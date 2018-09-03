@@ -1,0 +1,15 @@
+.clear_float {
+  zoom: 1;
+}
+.clear_float:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.element {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
